@@ -356,6 +356,33 @@ table.caps td.same{color:var(--ink-3);font-family:"Public Sans",sans-serif;font-
 .talkrow{display:flex;gap:8px;margin-top:4px}
 .talkrow .act{flex:1;text-align:center;text-decoration:none;margin-top:10px;padding:11px 8px;font-size:13.5px}
 .talkaddr{margin-top:11px;font-size:11.5px;color:var(--ink-3);text-align:center;line-height:1.4}
+
+/* ---------- install banner + instructions sheet ---------- */
+.install{
+  display:flex;align-items:center;gap:10px;margin:14px 0 -6px;
+  background:var(--brand-wash);border:1px solid var(--rule);border-radius:12px;padding:10px 10px 10px 12px;
+}
+.installtile{width:36px;height:36px;border-radius:9px;background:var(--brand);display:grid;place-items:center;flex:none;color:#fff}
+.installtile svg{width:16px;height:auto}
+.install p{margin:0;flex:1;min-width:0;font-size:12px;color:var(--ink-2);line-height:1.35}
+.install p b{display:block;font-size:13.5px;color:var(--ink);font-weight:700}
+.installbtn{
+  flex:none;cursor:pointer;padding:9px 14px;border:0;border-radius:9px;
+  background:var(--action);color:var(--onbrand);font:inherit;font-size:13px;font-weight:700;
+}
+.installx{flex:none;cursor:pointer;width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--ink-3);font-size:20px;line-height:1}
+.installx:hover{background:var(--surface)}
+.sheetwrap{position:fixed;inset:0;z-index:100;background:rgba(10,27,54,.55);display:flex;align-items:flex-end;justify-content:center}
+.sheet{
+  width:100%;max-width:560px;background:var(--surface);color:var(--ink);
+  border-radius:18px 18px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));
+  box-shadow:0 -10px 40px rgba(0,0,0,.25);max-height:85vh;overflow:auto;
+}
+.sheet h2{font-size:20px;margin-bottom:6px}
+.sheet h3{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin:16px 0 6px;font-family:"Public Sans",sans-serif;font-weight:700}
+.sheet ol{margin:0;padding-left:20px;font-size:14px;color:var(--ink-2);line-height:1.55}
+.sheet ol b{color:var(--ink)}
+.sheet .act{margin-top:18px}
 footer{padding:26px 0 10px;color:var(--ink-3);font-size:11.5px;line-height:1.55}
 footer a{color:var(--brand)}
 </style>
@@ -407,6 +434,13 @@ footer a{color:var(--brand)}
 </header>
 
 <main>
+
+<div class="install" id="install" hidden>
+  <span class="installtile"><svg viewBox="0 14.3 24 21.2" aria-hidden="true"><use href="#gs-arrow"></use></svg></span>
+  <p><b>Add GrowthSure Finance to your phone</b>One tap from your home screen, works offline.</p>
+  <button class="installbtn" id="installBtn" type="button">Install</button>
+  <button class="installx" id="installX" type="button" aria-label="Hide this tip">×</button>
+</div>
 
 <!-- ============ REPAYMENTS ============ -->
 <section class="panel on" id="p-repay" role="tabpanel" aria-label="Repayments">
@@ -1646,6 +1680,45 @@ document.getElementById('newsList').innerHTML = NEWS.map(function(n){
       '<div class="talkaddr">Shop 1, 58–62 Fitzwilliam Road, Old Toongabbie NSW 2146 · growthsure.com.au</div>'+
     '</div>';
   [].slice.call(document.querySelectorAll('.talk')).forEach(function(el){ el.innerHTML = html; });
+})();
+
+/* ===================== install to home screen ===================== */
+(function(){
+  var deferredPrompt=null;
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferredPrompt=e; });
+  function isStandalone(){
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone===true;
+  }
+  var dismissed=false;
+  try{ dismissed = localStorage.getItem('gs-install-dismissed')==='1'; }catch(e){}
+  var banner=document.getElementById('install');
+  if(!banner) return;
+  if(!isStandalone() && !dismissed) banner.hidden=false;
+
+  function openSheet(html){
+    var w=document.createElement('div'); w.className='sheetwrap';
+    w.innerHTML='<div class="sheet" role="dialog" aria-modal="true">'+html+'</div>';
+    function close(){ if(w.parentNode) w.parentNode.removeChild(w); }
+    w.addEventListener('click', function(ev){ if(ev.target===w || ev.target.hasAttribute('data-close')) close(); });
+    document.body.appendChild(w);
+  }
+  document.getElementById('installBtn').addEventListener('click', function(){
+    if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt=null; return; }
+    openSheet('<h2>Install the app</h2>'+
+      '<h3>iPhone or iPad (Safari)</h3><ol><li>Tap the <b>Share</b> button (the square with an arrow).</li><li>Scroll down and tap <b>Add to Home Screen</b>.</li><li>Tap <b>Add</b>.</li></ol>'+
+      '<h3>Android (Chrome)</h3><ol><li>Tap the <b>⋮</b> menu at the top right.</li><li>Tap <b>Install app</b> or <b>Add to Home screen</b>.</li></ol>'+
+      '<button class="act" type="button" data-close>Got it</button>');
+  });
+  document.getElementById('installX').addEventListener('click', function(){
+    try{ localStorage.setItem('gs-install-dismissed','1'); }catch(e){}
+    banner.hidden=true;
+  });
+  window.addEventListener('appinstalled', function(){ banner.hidden=true; });
+
+  /* offline support: only where the app is served from its own site over https */
+  if('serviceWorker' in navigator && location.protocol==='https:' && !/claude\.ai$/.test(location.hostname)){
+    try{ navigator.serviceWorker.register('sw.js').catch(function(){}); }catch(e){}
+  }
 })();
 
 /* ===================== boot ===================== */
