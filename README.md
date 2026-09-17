@@ -3,7 +3,7 @@
 The client-facing GrowthSure Finance web app: home loan repayments, stamp duty for every state,
 government grants and concessions, the RBA cash rate and industry news.
 
-- `index.html` — the live app served by GitHub Pages at https://app.growthsure.com.au
+- `index.html` — the live app served by GitHub Pages at https://finance.growthsure.com.au
 - `manifest.webmanifest`, `icon-*.png`, `apple-touch-icon.png` — lets phones install it to the home screen
 - `CNAME` — the custom domain for GitHub Pages
 - `src/growthsure-finance.html` — the app source (also published to the claude.ai artifact)
