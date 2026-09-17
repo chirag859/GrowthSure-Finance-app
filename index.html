@@ -1,0 +1,1673 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="GrowthSure Finance â€” repayment and stamp duty calculators for every Australian state, government grants and concessions, and the RBA cash rate, kept current every week.">
+<meta name="theme-color" content="#0D47A1">
+<meta name="color-scheme" content="light dark">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="GrowthSure">
+<meta name="application-name" content="GrowthSure Finance">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+img{max-width:100%}
+</style>
+</head>
+<body><title>GrowthSure Finance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+/* GrowthSure brand — blue #0D47A1, red #DC3F4D, taken from growthsure.com.au */
+:root{
+  --paper:#F2F6FC;
+  --surface:#FFFFFF;
+  --surface-2:#E7EFFA;
+  --ink:#0E2645;        /* deep GrowthSure navy — nothing in the app is black */
+  --ink-2:#40587A;
+  --ink-3:#7A8CA6;
+  --rule:#D9E3F2;
+  --rule-2:#BFCFE6;
+  --brand:#0D47A1;
+  --brand-lift:#1A5ABE;
+  --brand-wash:#E1EDFF;
+  --red:#DC3F4D;
+  --up:#C62C3C;
+  --up-wash:#FBE7E9;
+  --down:#1E7A5A;
+  --hold:#5A6B85;
+  --accent:#DC3F4D;
+  --onbrand:#FFFFFF;
+  --action:#0D47A1;
+  --hdr-bg:#0D47A1;
+  --hdr-ink:#FFFFFF;
+  --hdr-sub:rgba(255,255,255,.66);
+  --hdr-line:rgba(255,255,255,.20);
+  --hdr-fill:rgba(255,255,255,.10);
+  --shadow:0 1px 2px rgba(13,30,60,.06), 0 8px 24px -14px rgba(13,30,60,.30);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C1A30;
+    --surface:#13253F;
+    --surface-2:#1A2E4C;
+    --ink:#E6EDF8;
+    --ink-2:#A5B6CE;
+    --ink-3:#7688A3;
+    --rule:#223A5C;
+    --rule-2:#32496B;
+    --brand:#6FA8FF;
+    --brand-lift:#8FBDFF;
+    --brand-wash:#13233F;
+    --red:#FF6B78;
+    --up:#FF8A94;
+    --up-wash:#2E1621;
+    --down:#4FC79C;
+    --hold:#8FA2BC;
+    --accent:#FF6B78;
+    --onbrand:#0A1B36;
+    --action:#6FA8FF;
+    --hdr-bg:#0A1B36;
+    --hdr-ink:#FFFFFF;
+    --hdr-sub:rgba(255,255,255,.60);
+    --hdr-line:rgba(255,255,255,.14);
+    --hdr-fill:rgba(255,255,255,.07);
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C1A30;
+  --surface:#13253F;
+  --surface-2:#1A2E4C;
+  --ink:#E6EDF8;
+  --ink-2:#A5B6CE;
+  --ink-3:#7688A3;
+  --rule:#223A5C;
+  --rule-2:#32496B;
+  --brand:#6FA8FF;
+  --brand-lift:#8FBDFF;
+  --brand-wash:#13233F;
+  --red:#FF6B78;
+  --up:#FF8A94;
+  --up-wash:#2E1621;
+  --down:#4FC79C;
+  --hold:#8FA2BC;
+  --accent:#FF6B78;
+  --onbrand:#0A1B36;
+  --action:#6FA8FF;
+  --hdr-bg:#0A1B36;
+  --hdr-ink:#FFFFFF;
+  --hdr-sub:rgba(255,255,255,.60);
+  --hdr-line:rgba(255,255,255,.14);
+  --hdr-fill:rgba(255,255,255,.07);
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 26px -16px rgba(0,0,0,.8);
+}
+
+/* Header is the "Signature" treatment: GrowthSure blue ground, white wordmark, red arrow — in both themes */
+:root{ --hdr-bg:#0D47A1; --hdr-ink:#fff; --hdr-sub:rgba(255,255,255,.66); --hdr-line:rgba(255,255,255,.20); --hdr-fill:rgba(255,255,255,.10); }
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:"Bricolage Grotesque","Public Sans",sans-serif;margin:0;text-wrap:balance;letter-spacing:-.02em}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+
+/* ---------- shell ---------- */
+.topbar{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:40;
+  background:var(--hdr-bg);color:var(--hdr-ink);
+  padding:11px 16px 12px;
+  border-bottom:1px solid transparent;
+}
+:root[data-brand="clean"] .topbar{border-bottom-color:var(--rule)}
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brandmark{display:flex;align-items:center;gap:10px;min-width:0}
+
+/* the GrowthSure mark */
+.badge{
+  width:32px;height:32px;border-radius:9px;flex:none;display:none;
+  background:var(--red);place-items:center;
+}
+.badge svg{width:15px;height:auto;display:block;color:#fff}
+.lock{display:flex;align-items:center;gap:9px;min-width:0}
+.wordmark{height:19px;width:auto;display:block;flex:none}
+.wordmark{color:var(--hdr-ink)}
+.sub{
+  font-family:"Public Sans",sans-serif;font-size:12.5px;font-weight:600;
+  color:var(--hdr-sub);white-space:nowrap;letter-spacing:.01em;
+  padding-left:9px;border-left:1px solid var(--hdr-line);
+}
+/* lockup variants */
+:root[data-lock="badge"] .badge{display:grid}
+:root[data-lock="stack"] .badge{display:grid}
+:root[data-lock="stack"] .lock{flex-direction:column;align-items:flex-start;gap:3px}
+:root[data-lock="stack"] .sub{
+  padding-left:0;border-left:0;font-size:9.5px;letter-spacing:.24em;
+  text-transform:uppercase;font-weight:700;
+}
+:root[data-lock="stack"] .wordmark{height:17px}
+
+.themebtn{
+  background:var(--hdr-fill);border:1px solid var(--hdr-line);color:var(--hdr-ink);
+  width:32px;height:32px;border-radius:9px;cursor:pointer;font-size:14px;line-height:1;flex:none;
+}
+.themebtn:hover{filter:brightness(1.15)}
+
+.ticker{
+  display:flex;align-items:stretch;gap:0;margin-top:11px;
+  background:var(--hdr-fill);border:1px solid var(--hdr-line);
+  border-radius:11px;overflow:hidden;
+}
+.tick{flex:1;padding:7px 11px;min-width:0}
+.tick + .tick{border-left:1px solid var(--hdr-line)}
+.tick .k{font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;color:var(--hdr-sub);white-space:nowrap}
+.tick .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:16px;font-weight:600;color:var(--hdr-ink);line-height:1.25}
+.tick .v small{font-size:10.5px;font-weight:400;color:var(--hdr-sub);font-family:"Public Sans",sans-serif}
+/* on the white header the cash rate carries the brand red; on blue it stays white for contrast */
+:root[data-brand="clean"] .tick.live .v{color:var(--red)}
+
+main{padding:0 16px 96px;max-width:620px;margin:0 auto}
+.panel{display:none}
+.panel.on{display:block}
+
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:var(--surface);border-top:1px solid var(--rule);
+  padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));
+  display:grid;grid-template-columns:repeat(6,1fr);
+}
+.tabbtn{
+  background:none;border:0;cursor:pointer;padding:6px 2px 4px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  color:var(--ink-3);font:inherit;font-size:10.5px;font-weight:600;letter-spacing:.01em;
+}
+.tabbtn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tabbtn[aria-selected="true"]{color:var(--brand)}
+
+/* ---------- typography blocks ---------- */
+.pagehead{padding:20px 0 4px}
+.pagehead h1{font-size:25px;font-weight:700}
+.pagehead p{margin:5px 0 0;color:var(--ink-2);font-size:13.5px;max-width:52ch}
+.eyebrow{
+  font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;
+  color:var(--ink-3);margin:26px 0 9px;display:flex;align-items:center;gap:9px;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+/* ---------- inputs ---------- */
+.field{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.field > label{flex:1;font-size:13.5px;color:var(--ink-2);min-width:0}
+.field > label b{display:block;color:var(--ink);font-weight:600;font-size:14px}
+.field > label i{display:block;font-style:normal;font-size:11.5px;color:var(--ink-3);margin-top:1px}
+.inwrap{position:relative;flex:none;width:132px}
+.inwrap.pre::before{content:"$";position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px}
+.inwrap.pre input{padding-left:21px}
+.inwrap.post::after{content:"%";position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--ink-3);font-size:13px}
+.inwrap.post input{padding-right:24px}
+input[type=text],input[type=number],select{
+  width:100%;background:var(--surface);color:var(--ink);
+  border:1px solid var(--rule-2);border-radius:9px;padding:8px 10px;
+  font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;
+  font-size:14px;font-weight:500;text-align:right;
+}
+select{font-family:"Public Sans",sans-serif;text-align:left;width:100%}
+.field .inwrap.wide{width:172px}
+input:focus,select:focus,button:focus-visible{outline:2px solid var(--brand-lift);outline-offset:1px}
+
+.seg{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0 2px}
+.seg button{
+  flex:1 1 auto;min-width:88px;padding:8px 9px;cursor:pointer;
+  background:var(--surface);border:1px solid var(--rule-2);border-radius:9px;
+  color:var(--ink-2);font:inherit;font-size:12.5px;font-weight:600;
+}
+.seg button[aria-pressed="true"]{background:var(--action);border-color:var(--action);color:var(--onbrand)}
+
+/* ---------- results ---------- */
+.result{
+  background:var(--surface);border:1px solid var(--rule);border-radius:14px;
+  box-shadow:var(--shadow);padding:16px;margin-top:16px;
+}
+.bignum{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.bignum .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:34px;font-weight:600;letter-spacing:-.03em;line-height:1.05}
+.bignum .u{font-size:12.5px;color:var(--ink-3);font-weight:600}
+.subline{color:var(--ink-2);font-size:13px;margin-top:6px}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-top:1px solid var(--rule);font-size:13.5px}
+.kv:first-of-type{border-top:0}
+.kv .k{color:var(--ink-2);min-width:0}
+.kv .k small{display:block;color:var(--ink-3);font-size:11.5px}
+.kv .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.kv.tot{border-top:1.5px solid var(--rule-2);margin-top:3px;padding-top:10px;font-size:15px}
+.kv.tot .v{font-size:17px}
+.pos{color:var(--down)}.neg{color:var(--up)}
+
+.chip{
+  display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;
+  font-size:11px;font-weight:700;letter-spacing:.02em;
+  background:var(--brand-wash);color:var(--brand);
+}
+.chip.warn{background:var(--up-wash);color:var(--up)}
+.chip.mute{background:var(--surface-2);color:var(--ink-2)}
+
+.note{
+  font-size:12px;color:var(--ink-2);background:var(--surface-2);
+  border-left:2px solid var(--rule-2);border-radius:0 8px 8px 0;
+  padding:9px 11px;margin-top:12px;
+}
+.note b{color:var(--ink)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{padding:7px 9px;text-align:right;white-space:nowrap;border-bottom:1px solid var(--rule)}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-3);
+  font-weight:700;border-bottom:1px solid var(--rule-2);
+}
+td.n{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-weight:500}
+tr.hl td{background:var(--brand-wash)}
+/* price-cap table is built to fit a phone: short codes, compact money, no sideways scroll */
+table.caps{table-layout:fixed}
+table.caps th:first-child,table.caps td:first-child{white-space:normal;width:42%}
+table.caps thead th{white-space:normal;line-height:1.25;vertical-align:bottom}
+table.caps td:first-child b{font-weight:700;color:var(--ink)}
+table.caps td:first-child small{display:block;font-size:11px;color:var(--ink-3);line-height:1.25}
+table.caps td.same{color:var(--ink-3);font-family:"Public Sans",sans-serif;font-weight:400;font-style:italic}
+
+/* ---------- chart ---------- */
+.chartbox{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px 12px 10px;box-shadow:var(--shadow)}
+.chartbox svg{display:block;width:100%;height:auto;max-width:100%}
+
+/* ---------- news ---------- */
+.newsitem{padding:15px 0;border-bottom:1px solid var(--rule)}
+.newsitem:last-child{border-bottom:0}
+.newsmeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.newsdate{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);font-weight:500}
+.newsitem h3{font-size:16px;font-weight:700;line-height:1.28}
+.newsitem p{margin:6px 0 0;font-size:13.5px;color:var(--ink-2)}
+.newsitem .why{margin-top:7px;font-size:12.5px;color:var(--ink);background:var(--surface-2);padding:8px 10px;border-radius:9px}
+.newsitem .why b{color:var(--brand)}
+
+/* ---------- meetings ---------- */
+.mtg{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.mtg .d{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-weight:600;font-size:14px;width:88px;flex:none}
+.mtg .lab{flex:1;font-size:13px;color:var(--ink-2)}
+.mtg.past .d,.mtg.past .lab{color:var(--ink-3)}
+.mtg.next{background:var(--brand-wash);margin:0 -10px;padding:10px;border-radius:10px;border-bottom:0}
+.mtg.next .lab{color:var(--brand);font-weight:600}
+
+.act{
+  display:block;width:100%;margin-top:14px;padding:12px;cursor:pointer;
+  background:var(--action);color:var(--onbrand);border:0;border-radius:11px;
+  font:inherit;font-size:14px;font-weight:700;
+}
+.act:disabled{opacity:.55;cursor:default}
+.act.ghost{background:var(--surface);color:var(--brand);border:1px solid var(--rule-2)}
+
+/* ---------- benefits ---------- */
+.bgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.btile{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px 13px;min-width:0}
+.btile .k{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);font-weight:700}
+.btile .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.15;margin-top:3px}
+.btile .v.text{font-family:"Bricolage Grotesque","Public Sans",sans-serif;font-size:16px;letter-spacing:-.01em}
+.btile .d{font-size:12px;color:var(--ink-2);margin-top:5px;line-height:1.4}
+.btile.hero{grid-column:1 / -1;background:var(--brand-wash);border-color:transparent}
+.btile.hero .v{color:var(--brand)}
+.blist{margin:0;padding:0;list-style:none}
+.blist li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:13.5px;display:flex;gap:10px;align-items:flex-start}
+.blist li:last-child{border-bottom:0}
+.blist li b{color:var(--ink);font-weight:600;display:block}
+.blist li small{display:block;color:var(--ink-2);font-size:12.5px;line-height:1.45;margin-top:1px}
+.blist .dot{width:8px;height:8px;border-radius:50%;background:var(--brand);flex:none;margin-top:7px}
+.blist .dot.off{background:var(--rule-2)}
+.blist .dot.red{background:var(--red)}
+.fresh td:first-child{white-space:normal}
+.fresh td small{display:block;color:var(--ink-3);font-size:11px}
+.newslead{background:var(--brand);color:#fff;border-radius:14px;padding:15px 16px;margin-top:6px}
+.newslead .k{font-size:10px;text-transform:uppercase;letter-spacing:.1em;opacity:.7;font-weight:700}
+.newslead p{margin:6px 0 0;font-size:14px;line-height:1.5}
+.newslead q{font-style:italic}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:10px 12px;min-width:0}
+.stat .k{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);font-weight:700;line-height:1.3}
+.stat .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;font-size:21px;font-weight:600;letter-spacing:-.02em;margin-top:3px;color:var(--brand)}
+.stat .v.neg{color:var(--up)}
+.stat .s{font-size:11px;color:var(--ink-3);margin-top:2px;line-height:1.3}
+
+/* ---------- talk to GrowthSure ---------- */
+.talk{margin-top:22px}
+.talkcard{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:15px 16px;box-shadow:var(--shadow)}
+/* the real logo, in its own colours: blue wordmark, red arrow */
+.talklogo{height:22px;width:auto;display:block;color:var(--brand);margin-bottom:10px}
+.talkhead{display:flex;gap:12px;align-items:flex-start}
+.talkhead b{display:block;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.3}
+.talkhead small{display:block;font-size:12.5px;color:var(--ink-2);margin-top:2px}
+.talkrow{display:flex;gap:8px;margin-top:4px}
+.talkrow .act{flex:1;text-align:center;text-decoration:none;margin-top:10px;padding:11px 8px;font-size:13.5px}
+.talkaddr{margin-top:11px;font-size:11.5px;color:var(--ink-3);text-align:center;line-height:1.4}
+footer{padding:26px 0 10px;color:var(--ink-3);font-size:11.5px;line-height:1.55}
+footer a{color:var(--brand)}
+</style>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <symbol id="gs-word" viewBox="0 0 210 35">
+    <path style="fill:currentColor" d="M 22.945 3.699 L 20.853 8.446 L 20.492 8.19 C 19.324 7.335 18.177 6.712 17.088 6.332 C 16.006 5.959 14.801 5.769 13.525 5.769 C 11.166 5.769 9.392 6.457 8.23 7.832 C 7.055 9.214 6.456 11.35 6.456 14.174 C 6.449 18.329 7.697 20.948 10.243 22.089 L 6.218 26.171 C 4.248 25.081 2.712 23.508 1.644 21.518 C 0.548 19.47 0 16.998 0 14.167 C 0 11.416 0.556 8.98 1.652 6.939 C 2.749 4.884 4.328 3.282 6.341 2.17 C 8.346 1.058 10.712 0.495 13.373 0.495 L 13.387 0.495 C 15.263 0.502 17.044 0.765 18.667 1.285 C 20.312 1.811 21.683 2.565 22.75 3.523 L 22.945 3.699 Z"/>
+    <path style="fill:currentColor" d="M 37.546 7.899 L 37.541 7.899 C 36.254 7.899 35.08 8.231 34.054 8.887 C 33.352 9.334 32.772 9.919 32.32 10.636 C 32.172 9.325 31.079 8.335 29.778 8.335 L 26.21 8.332 L 26.26 8.743 C 26.449 10.283 26.544 12.053 26.542 14.002 L 26.536 27.608 L 32.703 27.611 L 32.708 17.553 C 32.709 16.244 33.057 15.216 33.744 14.498 C 34.427 13.784 35.449 13.422 36.782 13.422 L 36.785 13.422 C 37.618 13.422 38.466 13.621 39.303 14.012 L 39.811 14.249 L 39.855 8.398 L 39.642 8.299 C 39.068 8.034 38.363 7.9 37.546 7.899 Z"/>
+    <path style="fill:currentColor" d="M 54.297 21.761 C 53.654 22.578 52.739 22.975 51.498 22.975 L 51.495 22.975 C 48.898 22.974 47.636 21.31 47.638 17.89 C 47.64 16.178 47.977 14.884 48.643 14.04 C 49.298 13.21 50.232 12.808 51.497 12.808 L 51.499 12.808 C 52.741 12.808 53.657 13.211 54.3 14.041 C 54.953 14.885 55.285 16.181 55.285 17.893 C 55.283 19.628 54.951 20.929 54.297 21.761 Z M 56.72 9.086 C 55.228 8.278 53.436 7.88 51.492 7.87 C 49.498 7.87 47.728 8.276 46.23 9.079 C 44.717 9.89 43.539 11.072 42.726 12.592 C 41.919 14.102 41.508 15.883 41.508 17.887 C 41.507 19.89 41.915 21.671 42.72 23.181 C 43.532 24.703 44.71 25.885 46.222 26.697 C 47.72 27.503 49.494 27.912 51.493 27.912 L 51.498 27.912 C 53.471 27.912 55.226 27.506 56.712 26.702 C 58.211 25.891 59.384 24.711 60.197 23.19 C 61.004 21.679 61.414 19.898 61.415 17.896 C 61.416 15.893 61.008 14.112 60.202 12.601 C 59.391 11.08 58.219 9.898 56.72 9.086 Z"/>
+    <path style="fill:currentColor" d="M 83.702 19.743 L 79.559 8.36 L 75.342 8.358 L 71.222 19.631 L 67.08 8.353 L 60.741 8.351 L 68.416 27.629 L 73.526 27.631 L 77.255 17.538 L 81.143 27.636 L 86.213 27.638 L 93.908 8.367 L 87.857 8.365 L 83.702 19.743 Z"/>
+    <path style="fill:currentColor" d="M 104.808 2.09 L 98.64 4.117 L 98.637 8.369 L 95.177 8.368 L 95.173 13.231 L 98.635 13.234 L 98.632 20.182 C 98.631 22.609 99.264 24.527 100.511 25.883 C 101.767 27.247 103.595 27.94 105.949 27.94 L 105.958 27.94 C 107.219 27.94 108.316 27.76 109.217 27.406 L 109.448 27.315 L 109.45 22.317 L 109.002 22.43 C 107.383 22.84 106.239 22.745 105.47 22.053 C 105.023 21.652 104.798 20.986 104.799 20.076 L 104.802 13.237 L 109.455 13.239 L 109.457 8.374 L 104.805 8.372 L 104.808 2.09 Z"/>
+    <path style="fill:currentColor" d="M 123.162 7.906 C 121.885 7.906 120.701 8.177 119.647 8.711 C 118.9 9.089 118.241 9.593 117.678 10.214 L 117.684 0.004 L 111.517 0 L 111.503 27.651 L 117.671 27.655 L 117.675 16.901 C 117.676 15.67 117.999 14.723 118.662 14.006 C 119.317 13.298 120.175 12.953 121.282 12.953 L 121.285 12.953 C 122.185 12.953 122.819 13.201 123.22 13.712 C 123.634 14.241 123.844 15.118 123.844 16.318 L 123.838 27.656 L 130.005 27.66 L 130.011 16.066 C 130.014 10.655 127.709 7.909 123.162 7.906 Z"/>
+    <path style="fill:currentColor" d="M 152.721 14.62 C 151.23 13.42 148.785 12.435 145.448 11.692 C 144.054 11.404 142.968 11.108 142.225 10.812 C 141.518 10.532 141.014 10.216 140.73 9.874 C 140.46 9.549 140.329 9.148 140.329 8.647 C 140.329 7.77 140.702 7.091 141.467 6.575 C 142.269 6.034 143.364 5.759 144.725 5.759 L 144.729 5.759 C 147.353 5.76 149.79 6.624 151.974 8.322 L 152.337 8.603 L 154.436 3.842 L 154.241 3.664 C 153.198 2.706 151.794 1.941 150.069 1.389 C 148.357 0.844 146.55 0.567 144.696 0.566 L 144.683 0.566 C 142.627 0.566 140.786 0.927 139.212 1.637 C 137.618 2.355 136.361 3.376 135.472 4.667 C 134.579 5.968 134.126 7.453 134.124 9.082 C 134.124 10.585 134.453 11.865 135.1 12.884 C 135.746 13.9 136.776 14.767 138.163 15.465 C 139.519 16.148 141.362 16.731 143.638 17.199 C 145.611 17.628 147.001 18.077 147.769 18.531 C 148.462 18.94 148.798 19.477 148.798 20.172 C 148.797 20.992 148.424 21.612 147.658 22.07 C 146.841 22.556 145.638 22.803 144.079 22.803 L 144.072 22.803 C 141.107 22.802 138.387 21.936 135.984 20.232 L 135.627 19.977 L 133.529 24.737 L 133.748 24.914 C 134.959 25.892 136.499 26.658 138.326 27.193 C 140.142 27.726 142.062 27.996 144.033 27.997 L 144.049 27.997 C 147.447 27.997 150.149 27.254 152.078 25.788 C 154.04 24.296 155.036 22.249 155.038 19.7 C 155.039 17.569 154.259 15.86 152.721 14.62 Z"/>
+    <path style="fill:currentColor" d="M 169.283 19.049 C 169.282 20.218 168.962 21.17 168.329 21.876 C 167.698 22.582 166.89 22.926 165.857 22.926 L 165.855 22.926 C 164.157 22.924 163.368 21.971 163.369 19.924 L 163.373 8.403 L 157.206 8.399 L 157.201 19.812 C 157.199 22.501 157.799 24.552 158.983 25.907 C 160.179 27.276 161.992 27.97 164.373 27.971 L 164.379 27.971 C 165.609 27.971 166.733 27.698 167.718 27.161 C 168.381 26.8 168.965 26.324 169.46 25.742 L 169.459 27.682 L 175.482 27.684 L 175.492 8.409 L 169.288 8.405 L 169.283 19.049 Z"/>
+    <path style="fill:currentColor" d="M 188.727 7.978 L 188.722 7.978 C 187.434 7.978 186.26 8.31 185.235 8.965 C 184.532 9.413 183.952 9.998 183.501 10.715 L 183.242 8.414 L 177.39 8.411 L 177.44 8.823 C 177.63 10.362 177.725 12.131 177.724 14.08 L 177.717 27.686 L 183.883 27.69 L 183.889 17.632 C 183.89 16.322 184.238 15.294 184.925 14.576 C 185.611 13.861 186.613 13.514 187.967 13.501 C 188.798 13.501 189.646 13.7 190.484 14.091 L 190.993 14.327 L 191.036 8.476 L 190.823 8.378 C 190.248 8.113 189.542 7.978 188.727 7.978 Z"/>
+    <path style="fill:currentColor" d="M 198.143 15.408 C 198.345 14.53 198.698 13.846 199.196 13.37 C 199.768 12.823 200.507 12.556 201.452 12.556 L 201.456 12.556 C 203.185 12.557 204.195 13.492 204.533 15.411 L 198.143 15.408 Z M 210 17.718 C 210.002 14.762 209.219 12.372 207.675 10.616 C 206.121 8.847 203.98 7.949 201.313 7.948 L 201.308 7.948 C 199.523 7.948 197.897 8.376 196.476 9.221 C 195.053 10.07 193.933 11.275 193.146 12.804 C 192.365 14.326 191.968 16.073 191.967 18.002 C 191.966 21.065 192.888 23.523 194.707 25.307 C 196.521 27.086 199.044 27.99 202.205 27.991 L 202.212 27.991 C 203.536 27.991 204.875 27.784 206.188 27.374 C 207.515 26.96 208.642 26.378 209.537 25.647 L 209.743 25.478 L 208.032 21.047 L 207.652 21.339 C 206.894 21.921 206.055 22.37 205.159 22.673 C 204.264 22.974 203.359 23.127 202.466 23.127 L 202.46 23.127 C 201.002 23.126 199.898 22.762 199.179 22.043 C 198.513 21.377 198.111 20.316 197.981 18.883 L 210 18.888 L 210 17.718 Z"/>
+    <path style="fill:var(--red)" d="M 23.565 14.788 L 23.565 26.068 L 19.108 26.068 L 19.108 22.425 L 17.737 23.815 L 16.879 24.685 L 11.62 30.018 L 6.708 35 L 0.332 35 L 6.643 28.592 L 15.796 19.309 L 12.695 19.309 L 12.695 14.788 L 23.565 14.788 Z"/>
+  </symbol>
+  <symbol id="gs-arrow" viewBox="0 14.3 24 21.2">
+    <path style="fill:currentColor" d="M 23.565 14.788 L 23.565 26.068 L 19.108 26.068 L 19.108 22.425 L 17.737 23.815 L 16.879 24.685 L 11.62 30.018 L 6.708 35 L 0.332 35 L 6.643 28.592 L 15.796 19.309 L 12.695 19.309 L 12.695 14.788 L 23.565 14.788 Z"/>
+  </symbol>
+</svg>
+
+<header class="topbar">
+  <div class="brandrow">
+    <div class="brandmark">
+      <span class="badge"><svg viewBox="0 14.3 24 21.2" aria-hidden="true"><use href="#gs-arrow"></use></svg></span>
+      <span class="lock">
+        <svg class="wordmark" viewBox="0 0 210 35" role="img" aria-label="GrowthSure"><use href="#gs-word"></use></svg>
+        <span class="sub">Finance</span>
+      </span>
+    </div>
+    <button class="themebtn" id="themeBtn" title="Switch theme" aria-label="Switch theme">◐</button>
+  </div>
+  <div class="ticker">
+    <div class="tick live">
+      <div class="k">RBA cash rate</div>
+      <div class="v">4.35<small>%</small></div>
+    </div>
+    <div class="tick">
+      <div class="k">Last move</div>
+      <div class="v" style="font-size:13px">+0.25<small> · 6 May 26</small></div>
+    </div>
+    <div class="tick">
+      <div class="k">Next decision</div>
+      <div class="v" style="font-size:13px" id="nextMtg">—</div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ REPAYMENTS ============ -->
+<section class="panel on" id="p-repay" role="tabpanel" aria-label="Repayments">
+  <div class="pagehead">
+    <h1>Repayment calculator</h1>
+    <p>Principal &amp; interest or interest-only, with extra repayments, an offset balance, and what happens if the RBA moves again.</p>
+  </div>
+
+  <div class="eyebrow">The loan</div>
+  <div class="field">
+    <label for="r_amt"><b>Loan amount</b><i>Example scenario — edit anything</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="r_amt" value="680,000"></span>
+  </div>
+  <div class="field">
+    <label for="r_rate"><b>Interest rate</b><i>Annual, variable or fixed</i></label>
+    <span class="inwrap post"><input type="text" inputmode="decimal" id="r_rate" value="6.09"></span>
+  </div>
+  <div class="field">
+    <label for="r_term"><b>Loan term</b><i>Years</i></label>
+    <span class="inwrap"><input type="text" inputmode="numeric" id="r_term" value="30"></span>
+  </div>
+  <div class="field">
+    <label for="r_freq"><b>Repayment frequency</b></label>
+    <span class="inwrap wide"><select id="r_freq">
+      <option value="12">Monthly</option>
+      <option value="26">Fortnightly</option>
+      <option value="52">Weekly</option>
+    </select></span>
+  </div>
+
+  <div class="eyebrow">Structure</div>
+  <div class="seg" id="r_type" role="group" aria-label="Repayment type">
+    <button type="button" data-v="pi" aria-pressed="true">Principal &amp; interest</button>
+    <button type="button" data-v="io" aria-pressed="false">Interest only</button>
+  </div>
+  <div class="field" id="r_ioWrap" hidden>
+    <label for="r_ioYears"><b>Interest-only period</b><i>Years, then P&amp;I over the balance of the term</i></label>
+    <span class="inwrap"><input type="text" inputmode="numeric" id="r_ioYears" value="5"></span>
+  </div>
+  <div class="field">
+    <label for="r_extra"><b>Extra repayment</b><i>Added to every repayment</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="r_extra" value="0"></span>
+  </div>
+  <div class="field">
+    <label for="r_offset"><b>Offset balance</b><i>Average balance held in offset</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="r_offset" value="0"></span>
+  </div>
+
+  <div class="result">
+    <div class="chip" id="r_chip">Principal &amp; interest</div>
+    <div class="bignum" style="margin-top:9px">
+      <span class="v" id="r_pay">—</span>
+      <span class="u" id="r_payUnit">per month</span>
+    </div>
+    <div class="subline" id="r_sub">—</div>
+    <div style="margin-top:14px">
+      <div class="kv"><span class="k">Total interest over the loan</span><span class="v" id="r_int">—</span></div>
+      <div class="kv"><span class="k">Total repaid</span><span class="v" id="r_tot">—</span></div>
+      <div class="kv" id="r_saveRow" hidden><span class="k">Interest saved <small>by extra repayments &amp; offset</small></span><span class="v pos" id="r_save">—</span></div>
+      <div class="kv" id="r_fastRow" hidden><span class="k">Loan paid off early by</span><span class="v pos" id="r_fast">—</span></div>
+    </div>
+  </div>
+
+  <div class="eyebrow">Balance over time</div>
+  <div class="chartbox"><div id="r_chart"></div></div>
+
+  <div class="eyebrow">If the RBA moves again</div>
+  <div class="scroll">
+    <table id="r_stress">
+      <thead><tr><th>Rate</th><th>Repayment</th><th>Change</th><th>Extra per year</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div class="note">Lenders normally assess a new loan at your rate <b>plus a 3.00% serviceability buffer</b> (APRA guidance). At <span class="num" id="r_buffRate">—</span> this loan would cost <span class="num" id="r_buffPay">—</span> a month — that's the figure the lender tests you against, not what you'll actually pay.</div>
+
+  <div class="talk"></div>
+</section>
+
+<!-- ============ STAMP DUTY ============ -->
+<section class="panel" id="p-duty" role="tabpanel" aria-label="Stamp duty">
+  <div class="pagehead">
+    <h1>Stamp duty</h1>
+    <p>Transfer duty for all eight states and territories, with first-home concessions, foreign buyer surcharges and the cash you need at settlement.</p>
+  </div>
+
+  <div class="eyebrow">Purchase</div>
+  <div class="seg" id="d_state" role="group" aria-label="State or territory">
+    <button type="button" data-v="NSW" aria-pressed="true">NSW</button>
+    <button type="button" data-v="VIC" aria-pressed="false">VIC</button>
+    <button type="button" data-v="QLD" aria-pressed="false">QLD</button>
+    <button type="button" data-v="WA" aria-pressed="false">WA</button>
+    <button type="button" data-v="SA" aria-pressed="false">SA</button>
+    <button type="button" data-v="TAS" aria-pressed="false">TAS</button>
+    <button type="button" data-v="ACT" aria-pressed="false">ACT</button>
+    <button type="button" data-v="NT" aria-pressed="false">NT</button>
+  </div>
+
+  <div class="field" style="margin-top:8px">
+    <label for="d_price"><b>Purchase price</b><i>Or market value, whichever is higher</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="d_price" value="850,000"></span>
+  </div>
+
+  <div class="eyebrow">Buyer</div>
+  <div class="seg" id="d_buyer" role="group" aria-label="Buyer type">
+    <button type="button" data-v="fhb" aria-pressed="true">First home buyer</button>
+    <button type="button" data-v="oo" aria-pressed="false">Owner-occupier</button>
+    <button type="button" data-v="inv" aria-pressed="false">Investor</button>
+  </div>
+  <div class="seg" id="d_prop" role="group" aria-label="Property type">
+    <button type="button" data-v="est" aria-pressed="true">Established</button>
+    <button type="button" data-v="new" aria-pressed="false">Newly built</button>
+    <button type="button" data-v="land" aria-pressed="false">Vacant land</button>
+  </div>
+  <div class="seg" id="d_foreign" role="group" aria-label="Foreign buyer">
+    <button type="button" data-v="no" aria-pressed="true">Australian citizen / PR</button>
+    <button type="button" data-v="yes" aria-pressed="false">Foreign buyer</button>
+  </div>
+
+  <div class="result">
+    <div class="chip" id="d_chip">—</div>
+    <div class="bignum" style="margin-top:9px">
+      <span class="v" id="d_total">—</span>
+      <span class="u">duty payable</span>
+    </div>
+    <div class="subline" id="d_sub">—</div>
+    <div style="margin-top:14px">
+      <div class="kv"><span class="k">Duty at the standard rate</span><span class="v" id="d_full">—</span></div>
+      <div class="kv" id="d_concRow" hidden><span class="k" id="d_concLabel">Concession</span><span class="v pos" id="d_conc">—</span></div>
+      <div class="kv" id="d_surRow" hidden><span class="k" id="d_surLabel">Foreign buyer surcharge</span><span class="v neg" id="d_sur">—</span></div>
+      <div class="kv tot"><span class="k">Total duty</span><span class="v" id="d_total2">—</span></div>
+    </div>
+    <div class="note" id="d_note"></div>
+  </div>
+
+  <div class="eyebrow">Cash to settle</div>
+  <div class="field">
+    <label for="d_dep"><b>Deposit</b><i>Your own savings</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="d_dep" value="170,000"></span>
+  </div>
+  <div class="field">
+    <label for="d_legal"><b>Conveyancing, searches &amp; inspections</b><i>Estimate</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="d_legal" value="2,500"></span>
+  </div>
+  <div class="result">
+    <div class="kv"><span class="k">Deposit</span><span class="v" id="c_dep">—</span></div>
+    <div class="kv"><span class="k">Stamp duty</span><span class="v" id="c_duty">—</span></div>
+    <div class="kv"><span class="k">Conveyancing &amp; inspections</span><span class="v" id="c_legal">—</span></div>
+    <div class="kv tot"><span class="k">Funds required</span><span class="v" id="c_tot">—</span></div>
+    <div class="kv" style="border-top:1px solid var(--rule);margin-top:8px">
+      <span class="k">Loan required <small id="c_lvrNote"></small></span><span class="v" id="c_loan">—</span>
+    </div>
+    <div class="note">Land titles registration and mortgage registration fees are set by each state's land registry and change most years — add those on top. LMI is a lender-by-lender premium; above 80% LVR check whether the <b>Australian Government 5% Deposit Scheme</b> removes it entirely (see Tools).</div>
+  </div>
+
+  <div class="eyebrow">How this state charges duty</div>
+  <div class="scroll"><table id="d_table"><thead><tr><th>Dutiable value</th><th>Duty</th></tr></thead><tbody></tbody></table></div>
+  <div class="note" id="d_src"></div>
+  <div class="talk"></div>
+</section>
+
+<!-- ============ BENEFITS ============ -->
+<section class="panel" id="p-benefits" role="tabpanel" aria-label="Government benefits">
+  <div class="pagehead">
+    <h1>Government help</h1>
+    <p>Every grant, duty concession and federal scheme a buyer can stack, state by state — with a worked example showing the dollars.</p>
+  </div>
+
+  <div class="eyebrow">Choose a state</div>
+  <div class="seg" id="g_state" role="group" aria-label="State or territory">
+    <button type="button" data-v="NSW" aria-pressed="true">NSW</button>
+    <button type="button" data-v="VIC" aria-pressed="false">VIC</button>
+    <button type="button" data-v="QLD" aria-pressed="false">QLD</button>
+    <button type="button" data-v="WA" aria-pressed="false">WA</button>
+    <button type="button" data-v="SA" aria-pressed="false">SA</button>
+    <button type="button" data-v="TAS" aria-pressed="false">TAS</button>
+    <button type="button" data-v="ACT" aria-pressed="false">ACT</button>
+    <button type="button" data-v="NT" aria-pressed="false">NT</button>
+  </div>
+
+  <div class="eyebrow" id="g_title">State benefits</div>
+  <div class="bgrid" id="g_tiles"></div>
+  <ul class="blist" id="g_list" style="margin-top:12px"></ul>
+
+  <div class="eyebrow">Worked example</div>
+  <div class="result" id="g_example"></div>
+
+  <div class="eyebrow">Federal — available in every state</div>
+  <ul class="blist">
+    <li><span class="dot"></span><span><b>Australian Government 5% Deposit Scheme</b><small>Formerly the Home Guarantee Scheme. From 1 October 2025: no income caps, no place limits, no waitlist, and no LMI. First home buyers need 5%; single parents and legal guardians need 2%. Buy new or established, or build. Over 320,000 buyers helped since 2020.</small></span></li>
+    <li><span class="dot"></span><span><b>Help to Buy — shared equity</b><small>The Government takes up to 40% of a new home or 30% of an existing one; the buyer needs a 2% deposit and no LMI. Income cap $103,000 single or $165,000 joint (wage-indexed each year). 10,000 places a year. Buyer must live in the home; the Government's share is repaid on sale or refinance.</small></span></li>
+    <li><span class="dot"></span><span><b>First Home Super Saver Scheme</b><small>Save the deposit inside super at 15% tax instead of your marginal rate. Up to $15,000 of voluntary contributions a year count, $50,000 in total; 85% of concessional contributions plus deemed earnings are released to buy your first home.</small></span></li>
+  </ul>
+
+  <div class="eyebrow">Price caps — 5% Deposit Scheme</div>
+  <table id="capTable" class="caps"><thead><tr><th>Where</th><th>Capital &amp; regional centres</th><th>Elsewhere</th></tr></thead><tbody></tbody></table>
+  <div class="eyebrow">Price caps — Help to Buy</div>
+  <table id="htbTable" class="caps"><thead><tr><th>Where</th><th>Capital &amp; regional centres</th><th>Elsewhere</th></tr></thead><tbody></tbody></table>
+  <div class="note">Regional centres: <b>NSW</b> Central Coast, Coffs Harbour–Grafton, Illawarra, Mid North Coast, Richmond–Tweed, Newcastle &amp; Lake Macquarie · <b>VIC</b> Geelong · <b>QLD</b> Gold Coast and Sunshine Coast. Note the Sydney cap is <b>$1.5m</b> under the 5% Deposit Scheme but <b>$1.3m</b> under Help to Buy. Both the purchase price and the lender's valuation must sit at or under the cap.</div>
+  <div class="talk"></div>
+</section>
+
+<!-- ============ RBA ============ -->
+<section class="panel" id="p-rba" role="tabpanel" aria-label="RBA">
+  <div class="pagehead">
+    <h1>RBA cash rate</h1>
+    <p>Where the cash rate sits, how it got here, and every Monetary Policy Board decision date through 2027.</p>
+  </div>
+
+  <div class="result">
+    <div class="chip mute">Held at the August 2026 meeting</div>
+    <div class="bignum" style="margin-top:9px">
+      <span class="v">4.35<span style="font-size:20px">%</span></span>
+      <span class="u">effective 12 August 2026</span>
+    </div>
+    <div class="subline">Three increases in 2026 — February, March and May — took the cash rate from 3.60% back to 4.35%, unwinding the 2025 easing cycle in full. The Board has held at the June and August meetings since.</div>
+    <div style="margin-top:14px">
+      <div class="kv"><span class="k">Cycle low</span><span class="v">3.60% <small style="color:var(--ink-3)">Aug 2025 – Jan 2026</small></span></div>
+      <div class="kv"><span class="k">Cycle high</span><span class="v">4.35% <small style="color:var(--ink-3)">now, and Nov 2023 – Feb 2025</small></span></div>
+      <div class="kv"><span class="k">Change over 12 months</span><span class="v neg">+0.75%</span></div>
+    </div>
+  </div>
+
+  <div class="eyebrow">Cash rate since April 2022</div>
+  <div class="chartbox"><div id="rbaChart"></div></div>
+  <div class="note">The cash rate is a step function — it holds flat between decisions and jumps on the day after each announcement. This chart plots it the way the RBA sets it, not as a smoothed trend line.</div>
+
+  <div class="eyebrow">Decision dates</div>
+  <div id="mtgList"></div>
+  <div class="note">The Monetary Policy Board meets over two days; the decision is announced at <b>2:30pm AEST on the second day</b> and takes effect the following day. Minutes follow two weeks later.</div>
+
+  <div class="eyebrow">Every change since 2022</div>
+  <div class="scroll"><table id="rateTable"><thead><tr><th>Effective</th><th>Change</th><th>Cash rate</th></tr></thead><tbody></tbody></table></div>
+  <div class="note">Source: <b>Reserve Bank of Australia</b>, cash rate target statistics. Held meetings omitted from this table — only moves are listed.</div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section class="panel" id="p-news" role="tabpanel" aria-label="News">
+  <div class="pagehead">
+    <h1>What changed</h1>
+    <p>Rate decisions, grant changes and scheme deadlines that change what you'll pay. Current as at 18 September 2026.</p>
+  </div>
+  <div class="newslead">
+    <div class="k">The RBA's own words · 11 August 2026</div>
+    <p><q>Momentum in the housing market has shifted, with housing prices falling in some capital cities and new housing loans declining noticeably.</q> Inflation is <q>not expected to return to around the midpoint of the target range until late 2027 and there are upside risks</q> — and the Board will consider <q>increasing the cash rate target further if upside risks materialise.</q></p>
+  </div>
+  <div class="eyebrow">The market in numbers</div>
+  <div class="stats">
+    <div class="stat"><div class="k">Cash rate</div><div class="v">4.35%</div><div class="s">held since May · RBA</div></div>
+    <div class="stat"><div class="k">Average new home loan</div><div class="v">$731k</div><div class="s">owner-occupiers · ABS, Jun qtr</div></div>
+    <div class="stat"><div class="k">New loans above 80% LVR</div><div class="v">29.7%</div><div class="s">of loans written · APRA, Jun qtr</div></div>
+    <div class="stat"><div class="k">Home loans in arrears</div><div class="v">1.01%</div><div class="s">non-performing · APRA, Jun qtr</div></div>
+    <div class="stat"><div class="k">Owner-occupier loans</div><div class="v neg">−3.3%</div><div class="s">quarter on quarter · ABS</div></div>
+    <div class="stat"><div class="k">Investor loans</div><div class="v neg">−8.6%</div><div class="s">quarter on quarter · ABS</div></div>
+  </div>
+  <div id="newsList"></div>
+  <div class="note"><b>Keep this current.</b> These items are hand-checked against the source regulator or revenue office — they are not an automated feed. Ask for a refresh after each RBA meeting and each state budget (state budgets land May–June; the ACT and NSW index their thresholds on 1 July).</div>
+</section>
+
+<!-- ============ TOOLS ============ -->
+<section class="panel" id="p-tools" role="tabpanel" aria-label="Tools">
+  <div class="pagehead">
+    <h1>Tools</h1>
+    <p>A rough idea of what you could borrow, before you send us a single document.</p>
+  </div>
+
+  <div class="eyebrow">Indicative borrowing power</div>
+  <div class="field">
+    <label for="b_inc"><b>Gross household income</b><i>Annual, before tax</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="b_inc" value="185,000"></span>
+  </div>
+  <div class="field">
+    <label for="b_dep"><b>Dependants</b></label>
+    <span class="inwrap"><input type="text" inputmode="numeric" id="b_dep" value="1"></span>
+  </div>
+  <div class="field">
+    <label for="b_adults"><b>Applicants</b></label>
+    <span class="inwrap"><input type="text" inputmode="numeric" id="b_adults" value="2"></span>
+  </div>
+  <div class="field">
+    <label for="b_exp"><b>Living expenses</b><i>Monthly, if higher than the benchmark floor</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="b_exp" value="0"></span>
+  </div>
+  <div class="field">
+    <label for="b_debt"><b>Other loan repayments</b><i>Monthly — car, personal, HECS</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="b_debt" value="650"></span>
+  </div>
+  <div class="field">
+    <label for="b_cards"><b>Credit card limits</b><i>Total limits, not balances</i></label>
+    <span class="inwrap pre"><input type="text" inputmode="numeric" id="b_cards" value="10,000"></span>
+  </div>
+  <div class="field">
+    <label for="b_rate"><b>Product rate</b><i>Assessed at this rate + 3.00%</i></label>
+    <span class="inwrap post"><input type="text" inputmode="decimal" id="b_rate" value="6.09"></span>
+  </div>
+  <div class="result">
+    <div class="chip mute">Indicative only — not a pre-approval</div>
+    <div class="bignum" style="margin-top:9px"><span class="v" id="b_out">—</span><span class="u">estimated maximum loan</span></div>
+    <div class="subline" id="b_sub">—</div>
+    <div style="margin-top:14px">
+      <div class="kv"><span class="k">Net monthly income <small>after tax, estimated</small></span><span class="v" id="b_net">—</span></div>
+      <div class="kv"><span class="k">Commitments &amp; benchmark expenses</span><span class="v" id="b_out2">—</span></div>
+      <div class="kv"><span class="k">Monthly surplus</span><span class="v" id="b_surplus">—</span></div>
+      <div class="kv"><span class="k">Assessment rate</span><span class="v" id="b_assess">—</span></div>
+    </div>
+    <div class="note">Uses a simplified tax estimate, a household expense floor in line with lender benchmarks, 3.8% of card limits as a monthly commitment, and a 3.00% serviceability buffer over 30 years. Every lender has its own HEM scale, shading of rental and bonus income, and treatment of HECS — real capacity routinely lands 10–15% either side of this. Treat it as a starting point — we confirm the real figure once we've seen your full position, and we know which lenders will look at it most favourably.</div>
+  </div>
+
+  <div class="eyebrow">Where the numbers come from</div>
+  <p style="font-size:13.5px;color:var(--ink-2);margin:0 0 6px">Every rate and threshold in this app was read from the source below on the date shown, not typed from memory. The "next check" is when that source is next likely to change.</p>
+  <table class="caps fresh" id="freshTable"><thead><tr><th>Dataset</th><th>Verified</th><th>Next check</th></tr></thead><tbody></tbody></table>
+  <div class="note">GrowthSure re-checks every figure against its source each Tuesday, and again after any state budget. If a figure here ever disagrees with the revenue office, the revenue office wins — and we'd like to hear about it.</div>
+  <div class="talk"></div>
+</section>
+
+<footer>
+  <b style="color:var(--ink-2)">GrowthSure Finance</b> — estimates to help you plan, not a loan offer or approval. Duty rates, thresholds and concessions are current as at 17 September 2026 and were taken from Revenue NSW, the Victorian SRO, Queensland Revenue Office, RevenueWA, RevenueSA, SRO Tasmania, the ACT Revenue Office, the NT Territory Revenue Office, the Reserve Bank of Australia and Housing Australia. They change — most commonly at state budgets and on 1 July. This is general information, not credit or tax advice, and does not account for a lender's own policy.
+</footer>
+</main>
+
+<nav class="tabbar" role="tablist" aria-label="Sections">
+  <button class="tabbtn" role="tab" aria-selected="true" data-p="p-repay">
+    <svg viewBox="0 0 24 24"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M8 7h8M8 11.5h2M12 11.5h2M16 11.5h0M8 15.5h2M12 15.5h2M16 15.5v3M8 18.5h6"/></svg>
+    Loan
+  </button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-p="p-duty">
+    <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10.5V21h14V10.5"/><path d="M9.5 21v-6h5v6"/></svg>
+    Duty
+  </button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-p="p-benefits">
+    <svg viewBox="0 0 24 24"><path d="M4 8.5h16v12H4z"/><path d="M4 12.5h16"/><path d="M12 8.5v12"/><path d="M12 8.5c-3-.5-5-2-4.5-4 .5-1.8 3-1.5 4.5 2 1.5-3.5 4-3.8 4.5-2 .5 2-1.5 3.5-4.5 4"/></svg>
+    Benefits
+  </button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-p="p-rba">
+    <svg viewBox="0 0 24 24"><path d="M3 17h4v-5h4V8h4V4h6"/><path d="M3 21h18"/></svg>
+    RBA
+  </button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-p="p-news">
+    <svg viewBox="0 0 24 24"><rect x="3" y="4.5" width="14" height="15" rx="2"/><path d="M17 8h2.5A1.5 1.5 0 0 1 21 9.5v8a2 2 0 0 1-4 0V8Z"/><path d="M6.5 8.5h7M6.5 12h7M6.5 15.5h4"/></svg>
+    News
+  </button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-p="p-tools">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></svg>
+    Tools
+  </button>
+</nav>
+
+<script>
+(function(){
+"use strict";
+
+/* ===================== formatting ===================== */
+var fmt0 = new Intl.NumberFormat('en-AU',{maximumFractionDigits:0});
+var fmt2 = new Intl.NumberFormat('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+function money(n){ return '$' + fmt0.format(Math.round(n||0)); }
+function money2(n){ return '$' + fmt2.format(n||0); }
+function num(el){ var v = (document.getElementById(el).value||'').replace(/[^0-9.\-]/g,''); var n = parseFloat(v); return isFinite(n)?n:0; }
+function commaify(el){
+  el.addEventListener('blur',function(){
+    var raw=(el.value||'').replace(/[^0-9.]/g,''); if(raw==='') return;
+    var n=parseFloat(raw); if(!isFinite(n)) return;
+    el.value = el.dataset.dec==='1' ? n.toFixed(2) : fmt0.format(Math.round(n));
+  });
+}
+
+/* ===================== theme ===================== */
+var themeBtn=document.getElementById('themeBtn');
+themeBtn.addEventListener('click',function(){
+  var r=document.documentElement, cur=r.getAttribute('data-theme');
+  var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var now = cur ? cur : (sysDark?'dark':'light');
+  r.setAttribute('data-theme', now==='dark'?'light':'dark');
+  try{ localStorage.setItem('gs-theme', r.getAttribute('data-theme')); }catch(e){}
+});
+try{ var t=localStorage.getItem('gs-theme'); if(t) document.documentElement.setAttribute('data-theme',t); }catch(e){}
+
+/* ===================== tabs ===================== */
+var tabs=[].slice.call(document.querySelectorAll('.tabbtn'));
+tabs.forEach(function(b){
+  b.addEventListener('click',function(){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x===b?'true':'false'); });
+    [].slice.call(document.querySelectorAll('.panel')).forEach(function(p){ p.classList.toggle('on', p.id===b.dataset.p); });
+    window.scrollTo({top:0,behavior:'instant' in window ? 'auto':'auto'});
+    try{ localStorage.setItem('gs-tab', b.dataset.p); }catch(e){}
+    if(b.dataset.p==='p-rba') drawRba();
+    if(b.dataset.p==='p-repay') drawLoanChart();
+  });
+});
+
+/* segmented controls */
+function seg(id, onChange){
+  var wrap=document.getElementById(id);
+  var btns=[].slice.call(wrap.querySelectorAll('button'));
+  btns.forEach(function(b){
+    b.addEventListener('click',function(){
+      btns.forEach(function(x){ x.setAttribute('aria-pressed', x===b?'true':'false'); });
+      onChange(b.dataset.v);
+    });
+  });
+  return function(){ var a=wrap.querySelector('[aria-pressed="true"]'); return a?a.dataset.v:btns[0].dataset.v; };
+}
+
+/* ===================== RBA data ===================== */
+/* Source: RBA cash rate target statistics. Moves only; holds omitted. */
+var RATE_MOVES=[
+  ['2022-05-04',0.25,0.35],['2022-06-08',0.50,0.85],['2022-07-06',0.50,1.35],['2022-08-03',0.50,1.85],
+  ['2022-09-07',0.50,2.35],['2022-10-05',0.25,2.60],['2022-11-02',0.25,2.85],['2022-12-07',0.25,3.10],
+  ['2023-02-08',0.25,3.35],['2023-03-08',0.25,3.60],['2023-05-03',0.25,3.85],['2023-06-07',0.25,4.10],
+  ['2023-11-08',0.25,4.35],
+  ['2025-02-19',-0.25,4.10],['2025-05-21',-0.25,3.85],['2025-08-13',-0.25,3.60],
+  ['2026-02-04',0.25,3.85],['2026-03-18',0.25,4.10],['2026-05-06',0.25,4.35]
+];
+var RATE_START={date:'2022-04-06', rate:0.10};
+
+/* Decision dates = second day of each two-day Monetary Policy Board meeting */
+var MEETINGS_2026=['2026-02-03','2026-03-17','2026-05-05','2026-06-16','2026-08-11','2026-09-29','2026-11-03','2026-12-08'];
+var MEETINGS_2027=['2027-02-09','2027-03-23','2027-05-04','2027-06-22','2027-08-10','2027-09-28','2027-11-02','2027-12-14'];
+/* live date, so the "days until next decision" countdown and past/upcoming labels stay right between republishes */
+var TODAY=new Date(); TODAY.setHours(0,0,0,0);
+if(isNaN(TODAY.getTime())) TODAY=new Date('2026-09-17T00:00:00');
+
+function dstr(iso,opts){
+  var d=new Date(iso+'T00:00:00');
+  return d.toLocaleDateString('en-AU', opts||{day:'numeric',month:'short',year:'numeric'});
+}
+
+/* next meeting chip */
+(function(){
+  var all=MEETINGS_2026.concat(MEETINGS_2027);
+  var nxt=null;
+  for(var i=0;i<all.length;i++){ if(new Date(all[i]+'T00:00:00')>=TODAY){ nxt=all[i]; break; } }
+  if(!nxt) return;
+  var days=Math.round((new Date(nxt+'T00:00:00')-TODAY)/86400000);
+  document.getElementById('nextMtg').innerHTML = dstr(nxt,{day:'numeric',month:'short'}) + '<small> · ' + days + ' days</small>';
+})();
+
+/* meeting list */
+(function(){
+  var host=document.getElementById('mtgList');
+  var all=MEETINGS_2026.concat(MEETINGS_2027);
+  var firstFuture=true, html='';
+  all.forEach(function(iso){
+    var d=new Date(iso+'T00:00:00');
+    var past = d < TODAY;
+    var cls = past?'mtg past':'mtg';
+    var lab;
+    if(past){
+      var mv=null;
+      RATE_MOVES.forEach(function(m){
+        var eff=new Date(m[0]+'T00:00:00');
+        if(Math.abs(eff-d)<=2*86400000) mv=m;
+      });
+      lab = mv ? (mv[1]>0?'Raised ':'Cut ') + Math.abs(mv[1]).toFixed(2) + '% to ' + mv[2].toFixed(2) + '%' : 'Held';
+    } else if(firstFuture){
+      cls='mtg next'; lab='Next decision · 2:30pm AEST'; firstFuture=false;
+    } else { lab='Scheduled'; }
+    html += '<div class="'+cls+'"><span class="d">'+dstr(iso,{day:'2-digit',month:'short',year:'2-digit'})+'</span><span class="lab">'+lab+'</span></div>';
+  });
+  host.innerHTML=html;
+})();
+
+/* rate table */
+(function(){
+  var tb=document.querySelector('#rateTable tbody'), html='';
+  for(var i=RATE_MOVES.length-1;i>=0;i--){
+    var m=RATE_MOVES[i];
+    var cls=m[1]>0?'neg':'pos';
+    var sign=m[1]>0?'+':'−';
+    html += '<tr'+(i===RATE_MOVES.length-1?' class="hl"':'')+'><td>'+dstr(m[0])+'</td>'+
+            '<td class="n '+cls+'">'+sign+Math.abs(m[1]).toFixed(2)+'%</td>'+
+            '<td class="n">'+m[2].toFixed(2)+'%</td></tr>';
+  }
+  tb.innerHTML=html;
+})();
+
+/* step chart */
+var rbaDrawn=false;
+function drawRba(){
+  var host=document.getElementById('rbaChart');
+  var W=host.clientWidth||520; if(W<260) W=260;
+  var H=Math.round(Math.min(230, Math.max(180, W*0.52)));
+  var padL=34,padR=10,padT=12,padB=24;
+  var t0=new Date('2022-04-01').getTime(), t1=new Date('2026-12-31').getTime();
+  var yMax=4.8;
+  function X(t){ return padL + (t-t0)/(t1-t0)*(W-padL-padR); }
+  function Y(v){ return padT + (1 - v/yMax)*(H-padT-padB); }
+
+  var pts=[{t:new Date(RATE_START.date).getTime(), r:RATE_START.rate}];
+  RATE_MOVES.forEach(function(m){ pts.push({t:new Date(m[0]).getTime(), r:m[2]}); });
+
+  var d='M '+X(pts[0].t)+' '+Y(pts[0].r);
+  for(var i=1;i<pts.length;i++){ d += ' L '+X(pts[i].t)+' '+Y(pts[i-1].r) + ' L '+X(pts[i].t)+' '+Y(pts[i].r); }
+  d += ' L '+X(new Date('2026-12-20').getTime())+' '+Y(pts[pts.length-1].r);
+  var area = d + ' L '+X(new Date('2026-12-20').getTime())+' '+Y(0)+' L '+X(pts[0].t)+' '+Y(0)+' Z';
+
+  var grid='',ticks='';
+  [0,1,2,3,4].forEach(function(v){
+    grid += '<line x1="'+padL+'" y1="'+Y(v)+'" x2="'+(W-padR)+'" y2="'+Y(v)+'" stroke="var(--rule)" stroke-width="1"/>';
+    ticks += '<text x="'+(padL-6)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="10" fill="var(--ink-3)" font-family="IBM Plex Mono, monospace">'+v+'%</text>';
+  });
+  var years='';
+  ['2022','2023','2024','2025','2026'].forEach(function(y){
+    var tx=new Date(y+'-07-01').getTime();
+    years += '<text x="'+X(tx)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10" fill="var(--ink-3)" font-family="IBM Plex Mono, monospace">'+y+'</text>';
+  });
+
+  var last=pts[pts.length-1];
+  var lx=X(new Date('2026-12-20').getTime()), ly=Y(last.r);
+  var peakLabel = '<text x="'+(X(new Date('2025-08-13').getTime()))+'" y="'+(Y(3.60)+15)+'" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-family="IBM Plex Mono, monospace">3.60</text>';
+
+  host.innerHTML =
+    '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="RBA cash rate from April 2022 to September 2026, a step chart rising to 4.35 percent, easing to 3.60 percent through 2025, then returning to 4.35 percent in 2026.">'+
+    grid+
+    '<path d="'+area+'" fill="var(--brand-wash)" stroke="none"/>'+
+    '<path d="'+d+'" fill="none" stroke="var(--brand)" stroke-width="2" stroke-linejoin="round"/>'+
+    peakLabel+
+    '<circle cx="'+lx+'" cy="'+ly+'" r="3.4" fill="var(--brand)" stroke="var(--surface)" stroke-width="1.6"/>'+
+    '<text x="'+(lx-6)+'" y="'+(ly-8)+'" text-anchor="end" font-size="11.5" font-weight="600" fill="var(--ink)" font-family="IBM Plex Mono, monospace">4.35%</text>'+
+    ticks+years+
+    '</svg>';
+  rbaDrawn=true;
+}
+
+/* ===================== repayments ===================== */
+['r_amt','r_rate','r_term','r_extra','r_offset','r_ioYears','d_price','d_dep','d_legal','b_inc','b_exp','b_debt','b_cards','b_rate','b_dep','b_adults'].forEach(function(id){
+  var el=document.getElementById(id); if(!el) return;
+  if(id==='r_rate'||id==='b_rate') el.dataset.dec='1';
+  commaify(el);
+  el.addEventListener('input', function(){ recalcAll(); });
+});
+document.getElementById('r_freq').addEventListener('change', recalcAll);
+
+var getType = seg('r_type', function(v){
+  document.getElementById('r_ioWrap').hidden = (v!=='io');
+  recalcAll();
+});
+
+function payment(P, r, n){ if(r===0) return P/n; return P*r/(1-Math.pow(1+r,-n)); }
+
+function amortise(P, annualRate, years, perYear, extra, offset, ioYears){
+  var r=annualRate/100/perYear;
+  var n=Math.round(years*perYear);
+  var ioN=Math.round((ioYears||0)*perYear);
+  var bal=P, totalInt=0, sched=[], pay;
+  var basePay = ioN>0 ? 0 : payment(P, r, n);
+  var piPay = payment(P, r, n-ioN);
+  var periods=0;
+  for(var i=0;i<n*1.05 && bal>0.01;i++){
+    var eff = Math.max(0, bal - offset);
+    var interest = eff*r;
+    if(i<ioN){ pay = interest; }
+    else { pay = piPay + extra; }
+    if(i>=ioN && pay > bal + interest) pay = bal + interest;
+    var principal = pay - interest;
+    if(i<ioN) principal = 0;
+    bal = bal - principal;
+    totalInt += interest;
+    periods++;
+    if(i % Math.max(1,Math.round(perYear/2))===0 || bal<=0.01) sched.push({p:i,bal:Math.max(0,bal)});
+    if(i>=ioN && principal<=0 && extra<=0 && offset>0 && eff<=0) break;
+    if(periods>perYear*60) break;
+  }
+  return {periods:periods, totalInterest:totalInt, payment: ioN>0?null:piPay, ioPayment: ioN>0? (P-offset>0?(P-offset)*r:0):null, piPayment:piPay, sched:sched, basePay:basePay};
+}
+
+var loanChartData=null;
+
+function recalcRepay(){
+  var P=num('r_amt'), rate=num('r_rate'), yrs=num('r_term')||30, perYear=parseInt(document.getElementById('r_freq').value,10);
+  var extra=num('r_extra'), offset=num('r_offset');
+  var io = getType()==='io';
+  var ioY = io? num('r_ioYears') : 0;
+  if(P<=0||yrs<=0){ return; }
+
+  var res=amortise(P, rate, yrs, perYear, extra, offset, ioY);
+  var base=amortise(P, rate, yrs, perYear, 0, 0, ioY);
+
+  var unit = perYear===12?'per month':(perYear===26?'per fortnight':'per week');
+  document.getElementById('r_payUnit').textContent = unit;
+  document.getElementById('r_chip').textContent = io ? ('Interest only for '+ioY+' years') : 'Principal & interest';
+
+  var shown = io ? (Math.max(0,P-offset)*(rate/100/perYear)) : (res.piPayment + extra);
+  document.getElementById('r_pay').textContent = money2(shown);
+
+  var sub;
+  if(io){
+    sub = 'Then '+money2(res.piPayment+extra)+' '+unit+' once the interest-only period ends — a jump of '+money(res.piPayment+extra-shown)+' '+unit+'.';
+  } else {
+    var yearsTaken = res.periods/perYear;
+    sub = 'Paid off in '+yearsTaken.toFixed(1)+' years'+(extra>0||offset>0?' with the extras applied':'')+'.';
+  }
+  document.getElementById('r_sub').textContent = sub;
+
+  document.getElementById('r_int').textContent = money(res.totalInterest);
+  document.getElementById('r_tot').textContent = money(res.totalInterest + P);
+
+  var saved = base.totalInterest - res.totalInterest;
+  var faster = (base.periods - res.periods)/perYear;
+  document.getElementById('r_saveRow').hidden = !(saved>1);
+  document.getElementById('r_fastRow').hidden = !(faster>0.05);
+  document.getElementById('r_save').textContent = money(saved);
+  var yy=Math.floor(faster), mm=Math.round((faster-yy)*12);
+  document.getElementById('r_fast').textContent = (yy>0?yy+'y ':'') + mm + 'm';
+
+  /* stress test */
+  var tb=document.querySelector('#r_stress tbody'), html='';
+  var basePay = io ? shown : res.piPayment + extra;
+  [0,0.25,0.5,1.0].forEach(function(d){
+    var nr=rate+d;
+    var np;
+    if(io){ np = Math.max(0,P-offset)*(nr/100/perYear); }
+    else { np = payment(P, nr/100/perYear, Math.round((yrs-ioY)*perYear)) + extra; }
+    var diff=np-basePay;
+    html += '<tr'+(d===0?' class="hl"':'')+'><td class="n">'+nr.toFixed(2)+'%</td>'+
+      '<td class="n">'+money2(np)+'</td>'+
+      '<td class="n'+(d===0?'':' neg')+'">'+(d===0?'current':'+'+money(diff))+'</td>'+
+      '<td class="n'+(d===0?'':' neg')+'">'+(d===0?'—':'+'+money(diff*perYear))+'</td></tr>';
+  });
+  tb.innerHTML=html;
+
+  var buff=rate+3;
+  document.getElementById('r_buffRate').textContent = buff.toFixed(2)+'%';
+  var buffPay = payment(P, buff/100/12, Math.round(yrs*12));
+  document.getElementById('r_buffPay').textContent = money(buffPay);
+
+  loanChartData={base:base, res:res, perYear:perYear, yrs:yrs, P:P, hasExtra:(extra>0||offset>0)};
+  drawLoanChart();
+}
+
+function drawLoanChart(){
+  if(!loanChartData) return;
+  var host=document.getElementById('r_chart');
+  var W=host.clientWidth||520; if(W<260) W=260;
+  var H=Math.round(Math.min(200,Math.max(150,W*0.44)));
+  var padL=40,padR=10,padT=10,padB=22;
+  var d=loanChartData;
+  var maxYears=Math.max(d.base.periods,d.res.periods)/d.perYear;
+  var P=d.P;
+  function X(p){ return padL + (p/d.perYear)/maxYears*(W-padL-padR); }
+  function Y(b){ return padT + (1-b/P)*(H-padT-padB); }
+  function path(s){
+    return s.map(function(pt,i){ return (i?'L':'M')+X(pt.p).toFixed(1)+' '+Y(pt.bal).toFixed(1); }).join(' ');
+  }
+  var grid='',ticks='';
+  [0,0.5,1].forEach(function(f){
+    grid+='<line x1="'+padL+'" y1="'+Y(P*f)+'" x2="'+(W-padR)+'" y2="'+Y(P*f)+'" stroke="var(--rule)"/>';
+    ticks+='<text x="'+(padL-6)+'" y="'+(Y(P*f)+4)+'" text-anchor="end" font-size="9.5" fill="var(--ink-3)" font-family="IBM Plex Mono, monospace">'+(f===0?'0':'$'+fmt0.format(Math.round(P*f/1000))+'k')+'</text>';
+  });
+  var xl='';
+  [0,Math.round(maxYears/2),Math.round(maxYears)].forEach(function(y){
+    xl+='<text x="'+X(y*d.perYear)+'" y="'+(H-5)+'" text-anchor="middle" font-size="9.5" fill="var(--ink-3)" font-family="IBM Plex Mono, monospace">'+y+'y</text>';
+  });
+  var extraPath = d.hasExtra ? '<path d="'+path(d.res.sched)+'" fill="none" stroke="var(--brand)" stroke-width="2.2"/>' : '';
+  var basePath = '<path d="'+path(d.base.sched)+'" fill="none" stroke="'+(d.hasExtra?'var(--rule-2)':'var(--brand)')+'" stroke-width="'+(d.hasExtra?'1.6':'2.2')+'"'+(d.hasExtra?' stroke-dasharray="3 3"':'')+'/>';
+  var legend = d.hasExtra
+    ? '<text x="'+(W-padR)+'" y="'+(padT+12)+'" text-anchor="end" font-size="10" fill="var(--brand)" font-family="Public Sans, sans-serif" font-weight="600">with extras</text>'+
+      '<text x="'+(W-padR)+'" y="'+(padT+26)+'" text-anchor="end" font-size="10" fill="var(--ink-3)" font-family="Public Sans, sans-serif">minimum only</text>'
+    : '';
+  host.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Loan balance falling to zero over the life of the loan.">'+grid+basePath+extraPath+legend+ticks+xl+'</svg>';
+}
+
+/* ===================== stamp duty ===================== */
+function per100(excess, rate){ return Math.ceil(Math.max(0,excess)/100)*rate; }
+
+function nswGeneral(v){
+  if(v<=18000) return Math.max(20, v*0.0125);
+  if(v<=38000) return 225+(v-18000)*0.015;
+  if(v<=103000) return 525+(v-38000)*0.0175;
+  if(v<=387000) return 1662+(v-103000)*0.035;
+  if(v<=1290000) return 11602+(v-387000)*0.045;
+  return 52237+(v-1290000)*0.055;
+}
+function nswDuty(v, residential){
+  if(residential && v>3870000) return 194137+(v-3870000)*0.07;
+  return nswGeneral(v);
+}
+function vicGeneral(v){
+  if(v<=25000) return v*0.014;
+  if(v<=130000) return 350+(v-25000)*0.024;
+  if(v<=960000) return 2870+(v-130000)*0.06;
+  if(v<=2000000) return v*0.055;
+  return 110000+(v-2000000)*0.065;
+}
+function vicPPR(v){
+  if(v<=25000) return v*0.014;
+  if(v<=130000) return 350+(v-25000)*0.024;
+  if(v<=440000) return 2870+(v-130000)*0.05;
+  return 18370+(v-440000)*0.06;
+}
+function qldGeneral(v){
+  if(v<=5000) return 0;
+  if(v<=75000) return per100(v-5000,1.50);
+  if(v<=540000) return 1050+per100(v-75000,3.50);
+  if(v<=1000000) return 17325+per100(v-540000,4.50);
+  return 38025+per100(v-1000000,5.75);
+}
+function qldHome(v){
+  if(v<=350000) return per100(v,1.00);
+  if(v<=540000) return 3500+per100(v-350000,3.50);
+  if(v<=1000000) return 10150+per100(v-540000,4.50);
+  return 30850+per100(v-1000000,5.75);
+}
+function qldFhConcession(v){
+  if(v<710000) return 17350; if(v<720000) return 15615; if(v<730000) return 13880;
+  if(v<740000) return 12145; if(v<750000) return 10410; if(v<760000) return 8675;
+  if(v<770000) return 6940;  if(v<780000) return 5205;  if(v<790000) return 3470;
+  if(v<800000) return 1735;  return 0;
+}
+function waGeneral(v){
+  if(v<=120000) return per100(v,1.90);
+  if(v<=150000) return 2280+per100(v-120000,2.85);
+  if(v<=360000) return 3135+per100(v-150000,3.80);
+  if(v<=725000) return 11115+per100(v-360000,4.75);
+  return 28453+per100(v-725000,5.15);
+}
+function saDuty(v){
+  if(v<=12000) return per100(v,1.00);
+  if(v<=30000) return 120+per100(v-12000,2.00);
+  if(v<=50000) return 480+per100(v-30000,3.00);
+  if(v<=100000) return 1080+per100(v-50000,3.50);
+  if(v<=200000) return 2830+per100(v-100000,4.00);
+  if(v<=250000) return 6830+per100(v-200000,4.25);
+  if(v<=300000) return 8955+per100(v-250000,4.75);
+  if(v<=500000) return 11330+per100(v-300000,5.00);
+  return 21330+per100(v-500000,5.50);
+}
+function tasDuty(v){
+  if(v<=3000) return 50;
+  if(v<=25000) return 50+per100(v-3000,1.75);
+  if(v<=75000) return 435+per100(v-25000,2.25);
+  if(v<=200000) return 1560+per100(v-75000,3.50);
+  if(v<=375000) return 5935+per100(v-200000,4.00);
+  if(v<=725000) return 12935+per100(v-375000,4.25);
+  return 27810+per100(v-725000,4.50);
+}
+function actOO(v){
+  if(v>1455000) return per100(v,4.54);
+  if(v<=260000) return per100(v,0.28);
+  if(v<=300000) return 728+per100(v-260000,2.20);
+  if(v<=500000) return 1608+per100(v-300000,3.40);
+  if(v<=750000) return 8408+per100(v-500000,4.32);
+  if(v<=1000000) return 19208+per100(v-750000,5.90);
+  return 33958+per100(v-1000000,6.40);
+}
+function actInv(v){
+  if(v>1455000) return per100(v,4.54);
+  if(v<=200000) return per100(v,1.20);
+  if(v<=300000) return 2400+per100(v-200000,2.20);
+  if(v<=500000) return 4600+per100(v-300000,3.40);
+  if(v<=750000) return 11400+per100(v-500000,4.32);
+  if(v<=1000000) return 22200+per100(v-750000,5.90);
+  return 36950+per100(v-1000000,6.40);
+}
+function ntDuty(v){
+  if(v<525000){ var V=v/1000; return 0.06571441*V*V + 15*V; }
+  if(v<=3000000) return v*0.0495;
+  if(v<=5000000) return v*0.0575;
+  return v*0.0595;
+}
+
+var SURCHARGE={NSW:9,VIC:8,QLD:8,WA:7,SA:7,TAS:8,ACT:0,NT:0};
+
+function calcDuty(state, v, buyer, prop, foreign){
+  var full=0, duty=0, label='', note='', concLabel='Concession';
+  var fhb = buyer==='fhb', oo = buyer!=='inv', land = prop==='land', isNew = prop==='new';
+
+  if(state==='NSW'){
+    full = nswDuty(v, true);
+    duty = full;
+    if(fhb){
+      if(land){
+        if(v<=350000){ duty=0; label='Exempt — First Home Buyers Assistance Scheme'; }
+        else if(v<=450000){ duty = full - nswDuty(350000,true)*(450000-v)/100000; label='Concession — First Home Buyers Assistance Scheme'; }
+        else label='Above the $450,000 vacant land threshold — full duty';
+      } else {
+        if(v<=800000){ duty=0; label='Exempt — First Home Buyers Assistance Scheme'; }
+        else if(v<=1000000){ duty = full - nswDuty(800000,true)*(1000000-v)/200000; label='Concession — First Home Buyers Assistance Scheme'; }
+        else label='Above the $1,000,000 threshold — full duty';
+      }
+    } else label = 'Standard transfer duty';
+    if(v>3870000) note='Premium property duty applies above $3,870,000 for residential property. ';
+    note += 'NSW thresholds are indexed to CPI each 1 July — these are the 2026–27 rates.';
+  }
+  else if(state==='VIC'){
+    full = vicGeneral(v);
+    duty = full;
+    if(fhb){
+      if(v<=600000){ duty=0; label='Exempt — first home buyer duty exemption'; }
+      else if(v<=750000){ duty = full*(v-600000)/150000; label='Concession — first home buyer sliding scale'; }
+      else label='Above the $750,000 threshold — full duty';
+    } else if(oo && v<=550000){
+      duty = vicPPR(v); label='Principal place of residence concession';
+    } else label='Standard land transfer duty';
+    note='The temporary off-the-plan duty concession — available to every buyer on strata apartments and townhouses with no value cap — now applies to contracts signed up to 20 April 2027, after a six-month extension passed in June 2026. After that the narrower standard concession returns.';
+    duty=Math.floor(duty); full=Math.floor(full);
+  }
+  else if(state==='QLD'){
+    full = qldGeneral(v);
+    duty = full;
+    if(fhb && (isNew || land)){
+      duty=0; label='Full first home concession — no value cap';
+      note='Since 1 May 2025 the first home (new home) and first home vacant land concessions are uncapped: an eligible first home buyer pays no transfer duty on a newly built home or on land they build their first home on, at any price.';
+    } else if(fhb){
+      var hc=qldHome(v), c=qldFhConcession(v);
+      duty=Math.max(0, hc-c);
+      label = v<800000 ? 'First home concession (established home)' : 'Home concession — above the $800,000 first home cap';
+      concLabel = 'Home concession rate + first home concession';
+      note='The first home concession on an established home cuts out at $800,000; the home concession still applies above that. From 1 August 2026 a first home concession claimant must be an Australian citizen, permanent resident or specified foreign retiree.';
+    } else if(oo){
+      duty=qldHome(v); label='Home concession — owner-occupier'; concLabel='Home concession';
+    } else label='Standard transfer duty';
+    if(!note) note='Queensland charges duty per $100 or part of $100, so the duty steps up in $100 increments.';
+  }
+  else if(state==='WA'){
+    full = waGeneral(v);
+    duty = full;
+    if(fhb){
+      if(land){
+        if(v<=450000){ duty=0; label='Exempt — first home owner rate (vacant land)'; }
+        else if(v<=550000){ duty=per100(v-450000,20.14); label='First home owner rate — vacant land'; }
+        else label='Above the $550,000 land threshold — general rate';
+      } else {
+        if(v<=600000){ duty=0; label='Exempt — first home owner rate'; }
+        else if(v<=800000){ duty=per100(v-600000,16.15); label='First home owner rate'; }
+        else label='Above the $800,000 threshold — general rate';
+      }
+      note='WA lifted the first home owner rate thresholds for transactions with a commencement date from 7 May 2026 — homes to $600,000 duty free (was $500,000) and the cut-out to $800,000. The first home owner grant cap south of the 26th parallel also went to $800,000.';
+    } else if(oo && v<=200000){
+      duty = v<=120000 ? per100(v,1.50) : 1800+per100(v-120000,4.04);
+      label='Concessional rate — principal place of residence under $200,000';
+    } else label='General rate of duty';
+  }
+  else if(state==='SA'){
+    full = saDuty(v);
+    duty = full;
+    if(fhb && (isNew||land)){
+      duty=0; label='Full relief — eligible first home buyer';
+      note='South Australia gives eligible first home buyers full stamp duty relief with no property value cap — but only on a new home, an off-the-plan apartment, or vacant land you build on. Established homes get nothing.';
+    } else if(fhb){
+      label='No relief — established homes are excluded in SA';
+      note='SA first home buyer relief does not extend to established homes. If you’re open to a new build or a house-and-land package, the whole of this duty disappears.';
+    } else label='Conveyance duty';
+    if(!note) note='SA abolished duty on mortgages (2009), leases (2004) and business transfers (2015). Land transfers remain dutiable.';
+  }
+  else if(state==='TAS'){
+    full = tasDuty(v);
+    duty = full;
+    label = 'Property transfer duty';
+    if(fhb){
+      label='No first home concession currently available';
+      note='Tasmania’s first home buyer exemption on established homes was not available for transactions settling after 30 June 2026, and the 50% off-the-plan concession ended for agreements executed after that date. A 50% concession for pensioners downsizing to a new home still applies.';
+    } else {
+      note='A 50% duty concession applies to eligible pensioners downsizing to a new Tasmanian home. The first home buyer and off-the-plan concessions both ended on 30 June 2026.';
+    }
+  }
+  else if(state==='ACT'){
+    full = oo ? actOO(v) : actInv(v);
+    duty = full;
+    label = oo ? 'Eligible owner-occupier rate' : 'Non-owner-occupier rate';
+    if(fhb){
+      duty=0; label='Exempt — Home Buyer Concession Scheme';
+      concLabel='Home Buyer Concession Scheme';
+      note='From 1 July 2026 an eligible buyer under the ACT Home Buyer Concession Scheme pays no conveyance duty at all — no income test and no property price cap, on new homes, established homes and vacant land. Eligibility requires no property interest anywhere in the previous 5 years and living in the home for at least a year.';
+    } else {
+      note='The ACT has two residential rate scales. The lower one requires at least one buyer to own and live in the home for a continuous year. Above $1,455,000 duty is a flat $4.54 per $100 on the whole value.';
+    }
+  }
+  else if(state==='NT'){
+    full = ntDuty(v);
+    duty = full;
+    label='Conveyance duty';
+    note='The NT is the only jurisdiction that uses a formula rather than brackets below $525,000: duty = (0.06571441 × V²) + 15V, where V is the value in thousands. Above that it is a flat percentage of the whole value. There is no first home buyer duty concession — Territory assistance comes as cash grants instead.';
+    if(fhb) label='No first home duty concession in the NT';
+  }
+
+  var sur = (foreign && SURCHARGE[state]>0) ? v*SURCHARGE[state]/100 : 0;
+  return {full:full, duty:duty, concession:Math.max(0,full-duty), surcharge:sur, label:label, note:note, concLabel:concLabel};
+}
+
+var DUTY_TABLES={
+  NSW:[['$0 – $18,000','$1.25 per $100 (minimum $20)'],['$18,001 – $38,000','$225 + $1.50 per $100 over $18,000'],['$38,001 – $103,000','$525 + $1.75 per $100 over $38,000'],['$103,001 – $387,000','$1,662 + $3.50 per $100 over $103,000'],['$387,001 – $1,290,000','$11,602 + $4.50 per $100 over $387,000'],['Over $1,290,000','$52,237 + $5.50 per $100 over $1,290,000'],['Over $3,870,000 (residential)','$194,137 + $7.00 per $100 — premium duty']],
+  VIC:[['$0 – $25,000','1.4% of the dutiable value'],['$25,001 – $130,000','$350 + 2.4% over $25,000'],['$130,001 – $960,000','$2,870 + 6% over $130,000'],['$960,001 – $2,000,000','5.5% of the whole value'],['Over $2,000,000','$110,000 + 6.5% over $2,000,000'],['Home under $550,000','Lower PPR scale — $18,370 + 6% over $440,000']],
+  QLD:[['$0 – $5,000','Nil'],['$5,001 – $75,000','$1.50 per $100 over $5,000'],['$75,001 – $540,000','$1,050 + $3.50 per $100 over $75,000'],['$540,001 – $1,000,000','$17,325 + $4.50 per $100 over $540,000'],['Over $1,000,000','$38,025 + $5.75 per $100 over $1,000,000'],['Home concession','$1.00 per $100 to $350,000, then $3,500 + $3.50 per $100']],
+  WA:[['$0 – $120,000','$1.90 per $100'],['$120,001 – $150,000','$2,280 + $2.85 per $100 over $120,000'],['$150,001 – $360,000','$3,135 + $3.80 per $100 over $150,000'],['$360,001 – $725,000','$11,115 + $4.75 per $100 over $360,000'],['Over $725,000','$28,453 + $5.15 per $100 over $725,000'],['First home owner rate','Nil to $600,000, then $16.15 per $100 to $800,000']],
+  SA:[['$0 – $12,000','$1.00 per $100'],['$12,001 – $30,000','$120 + $2.00 per $100 over $12,000'],['$30,001 – $50,000','$480 + $3.00 per $100 over $30,000'],['$50,001 – $100,000','$1,080 + $3.50 per $100 over $50,000'],['$100,001 – $200,000','$2,830 + $4.00 per $100 over $100,000'],['$200,001 – $250,000','$6,830 + $4.25 per $100 over $200,000'],['$250,001 – $300,000','$8,955 + $4.75 per $100 over $250,000'],['$300,001 – $500,000','$11,330 + $5.00 per $100 over $300,000'],['Over $500,000','$21,330 + $5.50 per $100 over $500,000']],
+  TAS:[['$0 – $3,000','$50'],['$3,001 – $25,000','$50 + $1.75 per $100 over $3,000'],['$25,001 – $75,000','$435 + $2.25 per $100 over $25,000'],['$75,001 – $200,000','$1,560 + $3.50 per $100 over $75,000'],['$200,001 – $375,000','$5,935 + $4.00 per $100 over $200,000'],['$375,001 – $725,000','$12,935 + $4.25 per $100 over $375,000'],['Over $725,000','$27,810 + $4.50 per $100 over $725,000']],
+  ACT:[['Owner-occupier to $260,000','$0.28 per $100'],['$260,001 – $300,000','$728 + $2.20 per $100'],['$300,001 – $500,000','$1,608 + $3.40 per $100'],['$500,001 – $750,000','$8,408 + $4.32 per $100'],['$750,001 – $1,000,000','$19,208 + $5.90 per $100'],['$1,000,001 – $1,455,000','$33,958 + $6.40 per $100'],['Over $1,455,000','Flat $4.54 per $100 on the whole value'],['Non-owner-occupier','Starts at $1.20 per $100 — higher scale to $1,455,000']],
+  NT:[['Under $525,000','(0.06571441 × V²) + 15V, V in thousands'],['$525,000 – $3,000,000','4.95% of the whole value'],['$3,000,001 – $5,000,000','5.75% of the whole value'],['Over $5,000,000','5.95% of the whole value']]
+};
+var DUTY_SRC={
+  NSW:'Revenue NSW — transfer duty rates and thresholds, 2026–27. First Home Buyers Assistance Scheme: exempt to $800,000, concession to $1,000,000; vacant land exempt to $350,000, concession to $450,000. Surcharge purchaser duty 9%.',
+  VIC:'State Revenue Office Victoria — land transfer duty current rates. First home buyers exempt to $600,000 with a sliding concession to $750,000. Foreign purchaser additional duty 8%.',
+  QLD:'Queensland Revenue Office — transfer duty and home concession rates. Additional foreign acquirer duty 8%.',
+  WA:'RevenueWA — transfer duty assessment, rates of duty. First home owner rate as it applies from 7 May 2026. Foreign buyers duty 7% on residential.',
+  SA:'RevenueSA — rate of stamp duty and first home buyer relief. Foreign ownership surcharge 7%.',
+  TAS:'State Revenue Office Tasmania — rates of duty and concessions. Foreign investor duty surcharge 8% on residential property.',
+  ACT:'ACT Revenue Office — conveyance duty for non-commercial property (rates from 1 July 2025) and the Home Buyer Concession Scheme as it applies from 1 July 2026.',
+  NT:'Territory Revenue Office / NT Government — conveyance duty. Verified against the official NT conveyance calculator.'
+};
+
+var getState = seg('d_state', function(){ recalcDuty(); });
+var getBuyer = seg('d_buyer', function(){ recalcDuty(); });
+var getProp  = seg('d_prop',  function(){ recalcDuty(); });
+var getForeign = seg('d_foreign', function(){ recalcDuty(); });
+
+var lastDuty=0;
+function recalcDuty(){
+  var st=getState(), v=num('d_price'), buyer=getBuyer(), prop=getProp(), foreign=getForeign()==='yes';
+  var r=calcDuty(st, v, buyer, prop, foreign);
+  var total=r.duty+r.surcharge;
+  lastDuty=total;
+
+  document.getElementById('d_chip').textContent = st + ' · ' + r.label;
+  document.getElementById('d_chip').className = 'chip' + (r.duty===0 && r.surcharge===0 ? '' : (r.concession>0?'':' mute'));
+  document.getElementById('d_total').textContent = money(total);
+  document.getElementById('d_total2').textContent = money(total);
+  document.getElementById('d_full').textContent = money(r.full);
+
+  var eff = v>0 ? (total/v*100) : 0;
+  document.getElementById('d_sub').textContent = total===0
+    ? 'No duty payable on this purchase.'
+    : 'That is ' + eff.toFixed(2) + '% of the purchase price.';
+
+  document.getElementById('d_concRow').hidden = !(r.concession>0);
+  document.getElementById('d_concLabel').textContent = r.concLabel;
+  document.getElementById('d_conc').textContent = '− ' + money(r.concession);
+  document.getElementById('d_surRow').hidden = !(r.surcharge>0);
+  document.getElementById('d_surLabel').textContent = 'Foreign buyer surcharge (' + SURCHARGE[st] + '%)';
+  document.getElementById('d_sur').textContent = '+ ' + money(r.surcharge);
+
+  var extraNote='';
+  if(foreign && SURCHARGE[st]===0) extraNote=' The ' + st + ' charges no foreign buyer duty surcharge on a transfer.';
+  document.getElementById('d_note').innerHTML = r.note + extraNote;
+
+  var tb=document.querySelector('#d_table tbody');
+  tb.innerHTML = DUTY_TABLES[st].map(function(row){
+    return '<tr><td>'+row[0]+'</td><td style="text-align:left;white-space:normal">'+row[1]+'</td></tr>';
+  }).join('');
+  document.getElementById('d_src').textContent = DUTY_SRC[st];
+
+  /* cash to settle */
+  var dep=num('d_dep'), legal=num('d_legal');
+  document.getElementById('c_dep').textContent=money(dep);
+  document.getElementById('c_duty').textContent=money(total);
+  document.getElementById('c_legal').textContent=money(legal);
+  document.getElementById('c_tot').textContent=money(dep+total+legal);
+  var loan=Math.max(0, v-dep);
+  document.getElementById('c_loan').textContent=money(loan);
+  var lvr = v>0 ? loan/v*100 : 0;
+  var note = lvr>80 ? lvr.toFixed(1)+'% LVR — LMI or a guarantee likely' : lvr.toFixed(1)+'% LVR';
+  document.getElementById('c_lvrNote').textContent=note;
+}
+
+/* ===================== borrowing power ===================== */
+function taxAU(gross){
+  /* resident rates 2024-25 onward, excluding Medicare levy */
+  var t=0;
+  if(gross>190000) t = 51638 + (gross-190000)*0.45;
+  else if(gross>135000) t = 31288 + (gross-135000)*0.37;
+  else if(gross>45000) t = 4288 + (gross-45000)*0.30;
+  else if(gross>18200) t = (gross-18200)*0.16;
+  var medicare = gross>26000 ? gross*0.02 : 0;
+  return t + medicare;
+}
+function recalcBorrow(){
+  var gross=num('b_inc'), deps=num('b_dep'), adults=Math.max(1,num('b_adults'));
+  var exp=num('b_exp'), debt=num('b_debt'), cards=num('b_cards'), rate=num('b_rate');
+  if(gross<=0) return;
+  /* split income across applicants for a fairer tax estimate */
+  var per=gross/adults;
+  var netAnnual = (per - taxAU(per))*adults;
+  var netMonthly = netAnnual/12;
+  var hemFloor = 1650 + (adults>1?1000:0) + deps*430;
+  var living = Math.max(hemFloor, exp||0);
+  var cardCost = cards*0.038;
+  var outgoings = living + debt + cardCost;
+  var surplus = Math.max(0, netMonthly - outgoings);
+  var assess = rate + 3;
+  var r = assess/100/12, n=360;
+  var capacity = r>0 ? surplus*(1-Math.pow(1+r,-n))/r : surplus*n;
+
+  document.getElementById('b_out').textContent = money(Math.floor(capacity/1000)*1000);
+  document.getElementById('b_net').textContent = money(netMonthly);
+  document.getElementById('b_out2').textContent = money(outgoings);
+  document.getElementById('b_surplus').textContent = money(surplus);
+  document.getElementById('b_assess').textContent = assess.toFixed(2)+'%';
+  document.getElementById('b_sub').textContent =
+    'Over 30 years at ' + assess.toFixed(2) + '%, with ' + money(living) + ' a month of household expenses assumed'
+    + (cards>0 ? ' and ' + money(cardCost) + ' a month attributed to credit card limits.' : '.');
+}
+
+/* ===================== static content ===================== */
+/* [short name, full name, capital & regional centres cap, elsewhere cap (null = one cap for the whole territory)] */
+var CAPS=[
+  ['NSW','New South Wales',1500000,800000],
+  ['VIC','Victoria',950000,650000],
+  ['QLD','Queensland',1000000,700000],
+  ['WA','Western Australia',850000,600000],
+  ['SA','South Australia',900000,500000],
+  ['TAS','Tasmania',700000,550000],
+  ['ACT','Australian Capital Territory',1000000,null],
+  ['NT','Northern Territory',750000,600000],
+  ['JBT','Jervis Bay &amp; Norfolk Island',550000,null],
+  ['IOT','Christmas &amp; Cocos Islands',400000,null]
+];
+/* Help to Buy caps differ from the 5% scheme in NSW and the NT */
+var HTB_CAPS=[
+  ['NSW','New South Wales',1300000,800000],
+  ['VIC','Victoria',950000,650000],
+  ['QLD','Queensland',1000000,700000],
+  ['WA','Western Australia',850000,600000],
+  ['SA','South Australia',900000,500000],
+  ['TAS','Tasmania',700000,550000],
+  ['ACT','Australian Capital Territory',1000000,null],
+  ['NT','Northern Territory',600000,600000],
+  ['JBT','Jervis Bay &amp; Norfolk Island',550000,null],
+  ['IOT','Christmas &amp; Cocos Islands',400000,null]
+];
+function capFmt(n){ if(n>=1000000){ return '$'+(n/1000000).toFixed(2).replace(/\.?0+$/,'')+'m'; } return '$'+Math.round(n/1000)+'k'; }
+function renderCaps(sel, rows){
+  document.querySelector(sel+' tbody').innerHTML = rows.map(function(r){
+    return '<tr><td><b>'+r[0]+'</b><small>'+r[1]+'</small></td>'+
+      '<td class="n">'+capFmt(r[2])+'</td>'+
+      '<td class="n'+(r[3]===null?' same':'')+'">'+(r[3]===null?'same':capFmt(r[3]))+'</td></tr>';
+  }).join('');
+}
+renderCaps('#capTable', CAPS);
+renderCaps('#htbTable', HTB_CAPS);
+
+/* ===================== data freshness ===================== */
+var FRESH=[
+  ['RBA cash rate, history &amp; 2026–27 meeting dates','Reserve Bank of Australia','17 Sep 2026','29 Sep 2026 (next decision)'],
+  ['NSW transfer duty 2026–27, premium threshold, FHBAS','Revenue NSW','17 Sep 2026','1 Jul 2027 (CPI indexation)'],
+  ['VIC land transfer duty, PPR &amp; first home scales','State Revenue Office Victoria','18 Sep 2026','20 Apr 2027 (off-the-plan concession ends)'],
+  ['QLD transfer duty, home &amp; first home concessions','Queensland Revenue Office','17 Sep 2026','Jun 2027 (state budget)'],
+  ['WA transfer duty &amp; first home owner rate','RevenueWA','17 Sep 2026','May 2027 (state budget)'],
+  ['SA stamp duty &amp; first home relief','RevenueSA','17 Sep 2026','Jun 2027 (state budget)'],
+  ['TAS property transfer duty &amp; concessions','State Revenue Office Tasmania','17 Sep 2026','30 Jun 2027 (grant year ends)'],
+  ['ACT conveyance duty &amp; Home Buyer Concession Scheme','ACT Revenue Office','17 Sep 2026','1 Jul 2027 (annual determination)'],
+  ['NT conveyance duty formula','NT Territory Revenue Office','17 Sep 2026','30 Sep 2027 (HomeGrown grants end)'],
+  ['First home owner grants, all states','Each state revenue office','17 Sep 2026','30 Jun 2027'],
+  ['5% Deposit Scheme &amp; Help to Buy caps','Housing Australia','17 Sep 2026','1 Jul 2027 (annual indexation)'],
+  ['First Home Super Saver limits','Australian Taxation Office','17 Sep 2026','1 Jul 2027']
+];
+document.querySelector('#freshTable tbody').innerHTML = FRESH.map(function(r){
+  return '<tr><td>'+r[0]+'<small>'+r[1]+'</small></td><td class="n">'+r[2]+'</td><td style="white-space:normal;font-size:12px;color:var(--ink-2)">'+r[3]+'</td></tr>';
+}).join('');
+
+/* ===================== government benefits by state ===================== */
+/* grant: {amt, name, rule}. ex: the worked example — a first home buyer, property type, price. */
+var BENEFITS={
+  NSW:{ name:'New South Wales',
+    grant:{amt:10000, name:'First Home Owner (New Homes) Grant', rule:'New or substantially renovated home up to $600,000, or land plus build up to $750,000. Not means-tested.'},
+    duty:{head:'No duty to $800,000', rule:'First Home Buyers Assistance Scheme: full exemption to $800,000 and a reduced rate to $1,000,000 on new or established homes. Vacant land: exempt to $350,000, reduced to $450,000.'},
+    items:[
+      ['on','Shared equity','Revenue NSW recognises approved shared-equity partners; the federal Help to Buy scheme is the main one open to new applicants.'],
+      ['on','5% Deposit Scheme cap','$1,500,000 in Sydney and the regional centres, $800,000 elsewhere — the highest cap in the country.'],
+      ['red','Watch','Duty brackets and the $3,870,000 premium threshold are indexed every 1 July; the $800,000 / $1,000,000 first-home thresholds are not.']
+    ],
+    ex:{price:590000, prop:'new', who:'A first home buyer purchasing a newly built home in Western Sydney for $590,000'} },
+  VIC:{ name:'Victoria',
+    grant:{amt:10000, name:'First Home Owner Grant', rule:'New homes only — never sold or lived in — with a dutiable value up to $750,000.'},
+    duty:{head:'No duty to $600,000', rule:'First home buyer exemption to $600,000, sliding concession to $750,000, on new or established homes and vacant land. Any owner-occupier gets the lower PPR scale under $550,000.'},
+    items:[
+      ['red','Deadline 20 Apr 2027','The temporary off-the-plan concession — any buyer, any value, no residence test, strata apartments and townhouses — needs a contract signed by 20 April 2027 (extended from 20 October 2026).'],
+      ['on','Bushfire relief','If your home was destroyed in the January 2026 bushfires, duty refunds and relief on a replacement home of up to $55,000 each are available, plus land tax waivers.'],
+      ['on','5% Deposit Scheme cap','$950,000 in Melbourne and Geelong, $650,000 elsewhere.'],
+      ['off','Victorian Homebuyer Fund','The state shared-equity fund is closed to new applicants; Help to Buy has taken its place.']
+    ],
+    ex:{price:600000, prop:'new', who:'A first home buyer purchasing a new townhouse in Melbourne’s outer east for $600,000'} },
+  QLD:{ name:'Queensland',
+    grant:{amt:30000, name:'First Home Owner Grant', rule:'New homes only, valued under $750,000, for contracts signed on or after 20 November 2023. One of the largest grants in Australia.'},
+    duty:{head:'No duty on a new first home — any price', rule:'Since 1 May 2025 the first home (new home) and first home vacant land concessions have no value cap. On an established first home the concession phases out from $710,000 to $800,000; the home concession still applies above that.'},
+    items:[
+      ['red','From 1 Aug 2026','A first home concession claimant must be an Australian citizen, permanent resident or specified foreign retiree.'],
+      ['on','5% Deposit Scheme cap','$1,000,000 in Brisbane, the Gold Coast and the Sunshine Coast, $700,000 elsewhere.'],
+      ['on','Card surcharge','QRO drops its card-payment surcharge from 1 October 2026.']
+    ],
+    ex:{price:700000, prop:'new', who:'A first home buyer signing a house-and-land package in Logan for $700,000'} },
+  WA:{ name:'Western Australia',
+    grant:{amt:10000, name:'First Home Owner Grant', rule:'New homes only. Value cap $800,000 south of the 26th parallel (all of Perth) and $1,000,000 north of it — the southern cap rose from $750,000 on 7 May 2026.'},
+    duty:{head:'No duty to $600,000', rule:'First home owner rate of duty from 7 May 2026: nil to $600,000, then $16.15 per $100 to $800,000. Vacant land: nil to $450,000, then $20.14 per $100 to $550,000.'},
+    items:[
+      ['on','Keystart','The WA Government lender offers low-deposit loans without LMI for eligible buyers — worth checking alongside the federal 5% scheme.'],
+      ['on','5% Deposit Scheme cap','$850,000 in Perth, $600,000 elsewhere.'],
+      ['on','Off-the-plan rebate to 2028','100% of duty back (capped at $50,000) on a pre-construction apartment up to $800,000, 75% if already under construction; tapering above that. Contracts to 30 June 2028.'],
+      ['on','Under $200,000','Any owner-occupier buying under $200,000 gets the concessional rate ($1.50 per $100 to $120,000).']
+    ],
+    ex:{price:600000, prop:'new', who:'A first home buyer purchasing a new home in Perth’s northern suburbs for $600,000'} },
+  SA:{ name:'South Australia',
+    grant:{amt:15000, name:'First Home Owner Grant', rule:'New homes, off-the-plan apartments and house-and-land — with no property value cap for contracts from 6 June 2024.'},
+    duty:{head:'No duty on a new first home — any price', rule:'Full stamp duty relief with no value cap on a new home, off-the-plan apartment or vacant land to build on. Established homes get no first-home relief at all.'},
+    items:[
+      ['on','HomeStart','SA’s state lender: low-deposit loans and a graduate loan without LMI.'],
+      ['on','Seniors downsizing','Stamp duty relief for eligible seniors selling the family home and buying a new smaller one.'],
+      ['on','5% Deposit Scheme cap','$900,000 in Adelaide, $500,000 elsewhere.']
+    ],
+    ex:{price:650000, prop:'new', who:'A first home buyer purchasing a new home in Adelaide’s south for $650,000'} },
+  TAS:{ name:'Tasmania',
+    grant:{amt:20000, name:'First Home Owner Grant', rule:'New homes only. $20,000 for transactions commencing 1 July 2026 to 30 June 2027 — down from $30,000 last financial year.'},
+    duty:{head:'Full duty — no first home concession', rule:'The first home exemption on established homes ended for settlements after 30 June 2026, and the 50% off-the-plan concession ended the same day. Only the 50% pensioner-downsizing concession remains.'},
+    items:[
+      ['red','Changed 1 Jul 2026','Tasmanian first home buyers of established homes now pay full duty — roughly $12,900 on a $375,000 purchase.'],
+      ['on','5% Deposit Scheme cap','$700,000 in Hobart, $550,000 elsewhere.'],
+      ['on','Pensioners','50% duty concession when downsizing from a Tasmanian home to a new Tasmanian home.']
+    ],
+    ex:{price:550000, prop:'new', who:'A first home buyer building a new home in Hobart’s northern suburbs for $550,000'} },
+  ACT:{ name:'Australian Capital Territory',
+    grant:{amt:0, name:'No first home owner grant', rule:'Grants ceased on 1 July 2019. The ACT puts its help into the duty exemption instead.'},
+    duty:{head:'No duty at all — any price', rule:'From 1 July 2026 the Home Buyer Concession Scheme is a full conveyance duty exemption with no income test and no price cap, on new homes, established homes and vacant land. All buyers must have held no property interest in the past 5 years and one must live in the home for a year.'},
+    items:[
+      ['on','5% Deposit Scheme cap','$1,000,000 across the whole territory.'],
+      ['on','Deferral','Buyers on the scheme can defer any duty owing; with a full exemption there is normally none.'],
+      ['on','Owner-occupier scale','Buyers outside the scheme still get the lower owner-occupier duty scale if one buyer lives in the home for a year.']
+    ],
+    ex:{price:850000, prop:'est', who:'An eligible buyer purchasing an established home in Gungahlin for $850,000'} },
+  NT:{ name:'Northern Territory',
+    grant:{amt:50000, name:'HomeGrown Territory Grant', rule:'First home buyers building or buying a new home, off the plan or as owner-builder. No price cap. Contract by 30 September 2027; apply by 30 September 2028.'},
+    duty:{head:'Full duty — no first home concession', rule:'The NT has no first-home duty concession; help comes as cash grants. A house-and-land package may qualify for a separate duty exemption — check with the Territory Revenue Office.'},
+    items:[
+      ['on','FreshStart New Home Grant','$30,000 for buyers who are not first home buyers to build or buy a new home — also extended to 30 September 2027.'],
+      ['off','Established homes','The $10,000 grant for established homes closed to contracts after 30 September 2025.'],
+      ['on','5% Deposit Scheme cap','$750,000 in Darwin, $600,000 elsewhere.']
+    ],
+    ex:{price:600000, prop:'new', who:'A first home buyer purchasing a new home in Palmerston for $600,000'} }
+};
+
+var getGState = seg('g_state', function(){ renderBenefits(); });
+function renderBenefits(){
+  var st=getGState(), b=BENEFITS[st];
+  document.getElementById('g_title').textContent = b.name;
+  var tiles='';
+  tiles += '<div class="btile hero"><div class="k">Stamp duty for a first home buyer</div><div class="v text">'+b.duty.head+'</div><div class="d">'+b.duty.rule+'</div></div>';
+  tiles += '<div class="btile"><div class="k">'+b.grant.name+'</div><div class="v'+(b.grant.amt?'':' text')+'">'+(b.grant.amt?money(b.grant.amt):'None')+'</div><div class="d">'+b.grant.rule+'</div></div>';
+  tiles += '<div class="btile"><div class="k">Federal 5% deposit</div><div class="v text">No LMI</div><div class="d">Guarantee covers the gap to 20%. Price caps below.</div></div>';
+  document.getElementById('g_tiles').innerHTML = tiles;
+  document.getElementById('g_list').innerHTML = b.items.map(function(i){
+    return '<li><span class="dot '+(i[0]==='on'?'':i[0])+'"></span><span><b>'+i[1]+'</b><small>'+i[2]+'</small></span></li>';
+  }).join('');
+
+  var ex=b.ex, r=calcDuty(st, ex.price, 'fhb', ex.prop, false);
+  var saved = r.full - r.duty;
+  var total = saved + b.grant.amt;
+  var html = '<div class="chip">'+st+' · first home buyer</div>'+
+    '<p style="margin:10px 0 0;font-size:14px;color:var(--ink-2)">'+ex.who+'.</p>'+
+    '<div style="margin-top:12px">'+
+    '<div class="kv"><span class="k">Duty at the standard rate</span><span class="v">'+money(r.full)+'</span></div>'+
+    '<div class="kv"><span class="k">Duty actually payable</span><span class="v">'+money(r.duty)+'</span></div>'+
+    (saved>0 ? '<div class="kv"><span class="k">Duty saved</span><span class="v pos">'+money(saved)+'</span></div>' : '')+
+    (b.grant.amt ? '<div class="kv"><span class="k">'+b.grant.name+'</span><span class="v pos">'+money(b.grant.amt)+'</span></div>' : '')+
+    '<div class="kv tot"><span class="k">Government help on this purchase</span><span class="v'+(total>0?' pos':'')+'">'+money(total)+'</span></div>'+
+    '</div>'+
+    '<div class="note">Add the 5% Deposit Scheme on top: at '+money(ex.price)+' a 5% deposit is '+money(ex.price*0.05)+' and there is no LMI to pay. '+
+    (total>0 ? 'Against a 20% deposit of '+money(ex.price*0.2)+', that is the difference between buying now and saving for years.' : 'Duty still has to be found at settlement here — plan for it early.')+'</div>';
+  document.getElementById('g_example').innerHTML = html;
+}
+renderBenefits();
+
+var NEWS=[
+  {d:'2026-09-29', tag:'Coming up', cls:'chip', h:'RBA decides again on 29 September',
+   p:'The Monetary Policy Board meets 28–29 September, announcing at 2:30pm AEST on the 29th. The cash rate has sat at 4.35% since the May increase, with holds in June and August.',
+   w:'If you’re on a variable rate, this is the date your repayment could change. The Loan tab shows exactly what another 0.25% would cost you each month — check it before the announcement, not after.'},
+  {d:'2026-07-01', tag:'ACT', cls:'chip', h:'ACT scraps stamp duty entirely for eligible home buyers',
+   p:'From 1 July 2026 the Home Buyer Concession Scheme is a full exemption from conveyance duty — no income test and no property price cap, covering new homes, established homes and vacant land. Buyers must not have held any property interest in the previous five years and must live in the home for at least a year.',
+   w:'If you’re buying in Canberra and haven’t owned property in the last five years, you could pay no stamp duty at all — on an $850,000 home that’s about $25,000 back in your pocket.'},
+  {d:'2026-07-01', tag:'TAS', cls:'chip warn', h:'Tasmania’s first home and off-the-plan concessions have ended',
+   p:'The first home buyer exemption on established homes is not available for transactions settling after 30 June 2026, and the 50% off-the-plan concession ended for agreements executed after that date. The 50% pensioner downsizing concession remains.',
+   w:'If you’re a Tasmanian first home buyer, budget for full duty — roughly $12,900 on a $375,000 home. Articles from last year still promise an exemption; it’s gone.'},
+  {d:'2026-05-07', tag:'WA', cls:'chip', h:'WA lifts the first home owner duty thresholds',
+   p:'For transactions commencing from 7 May 2026, a first home is duty free to $600,000 (up from $500,000) and the concession now cuts out at $800,000. Vacant land is free to $450,000 with a cut-out at $550,000. The first home owner grant cap south of the 26th parallel also rose to $800,000.',
+   w:'Buying your first home in Perth at $600,000 now costs about $17,500 less in duty than it did in April. If you were pre-approved before May, your numbers just improved — ask us to refresh them.'},
+  {d:'2026-05-06', tag:'RBA', cls:'chip warn', h:'Third increase of 2026 takes the cash rate to 4.35%',
+   p:'February, March and May each brought a 0.25% increase, reversing the three cuts delivered across 2025. The cash rate is back to where it sat from November 2023 to February 2025.',
+   w:'If you fixed or refinanced in 2025, the market you’ll roll into looks very different. It’s worth a conversation now about what your rate will be when the fixed period ends — not the month before.'},
+  {d:'2026-08-01', tag:'QLD', cls:'chip mute', h:'Queensland adds a residency test to the first home concession',
+   p:'For transactions entered into from 1 August 2026, a first home concession claimant must be an Australian citizen, permanent resident or specified foreign retiree. The uncapped first home (new home) and vacant land concessions introduced on 1 May 2025 are unchanged.',
+   w:'If you’re buying your first Queensland home on a temporary visa, your duty position has changed — tell us your visa status early so we can work out what you’ll actually pay.'},
+  {d:'2025-10-01', tag:'Federal', cls:'chip', h:'5% Deposit Scheme replaces the Home Guarantee Scheme',
+   p:'Since 1 October 2025 there are no income caps, no place limits and no waitlists, and no LMI is payable. First home buyers need a 5% deposit; single parents and legal guardians need 2%. Property price caps still apply by location — $1.5m in Sydney, $950,000 in Melbourne, $1m in Brisbane and the ACT.',
+   w:'If you have 5% saved and the home is under the cap for its postcode, you may not need lenders mortgage insurance at all — which can be $15,000 to $30,000 saved. Check the caps in the Benefits tab.'},
+  {d:'2027-04-20', until:true, tag:'VIC', cls:'chip', h:'Victoria extends the uncapped off-the-plan concession to April 2027',
+   p:'The temporary off-the-plan duty concession — open to every buyer including companies and trusts, on strata apartments and townhouses, with no value cap and no residence requirement — was due to end for contracts after 20 October 2026. Legislation passed in June 2026 extended it by six months: it now covers contracts signed on or before 20 April 2027. The duty is calculated on the contract price minus construction costs incurred after you sign, which on an unbuilt apartment can be most of the price.',
+   w:'If you’re looking at an off-the-plan apartment or townhouse in Victoria, you now have until 20 April 2027 to sign — no need to rush a decision into October. Investors especially: this temporary version is the only off-the-plan concession you qualify for.'},
+  {d:'2028-06-30', until:true, tag:'WA', cls:'chip', h:'WA’s off-the-plan duty rebate extended to mid-2028 and widened',
+   p:'For contracts from 12 March 2026, WA rebates 100% of transfer duty on an off-the-plan apartment or unit bought before construction starts, if it’s valued at $800,000 or less — capped at $50,000 — tapering to 50% above $900,000. Buy while it’s under construction and the rebate is 75%, tapering to 37.5%. It now also covers survey-strata and community-title land schemes, and runs to 30 June 2028.',
+   w:'On a $750,000 Perth apartment bought off the plan, that’s roughly $29,700 of duty wiped out — and it stacks with the first home owner rate if you qualify. The earlier you sign in the build, the bigger the rebate.'},
+  {d:'2026-08-14', tag:'Market', cls:'chip mute', h:'Fewer people are borrowing to buy — and the average loan is $731,000',
+   p:'The ABS counted 81,626 new owner-occupier home loans in the June 2026 quarter, down 3.3% on the previous quarter, and investor loans fell 8.6%. First home buyers held steady at 29,319 loans. The average new owner-occupier loan is $731,000 nationally, ranging from $516,000 in Tasmania to $842,000 in New South Wales.',
+   w:'Fewer competing buyers means more room to negotiate on price and conditions. And if your loan is above the state average, that isn’t unusual — but it does mean the rate stress test in the Loan tab matters more for you.'},
+  {d:'2026-09-17', tag:'Lenders', cls:'chip mute', h:'Banks are still lending above 80% — and very few borrowers are behind',
+   p:'APRA’s June 2026 quarter figures: 29.7% of new home loans were written above 80% LVR, and 5.6% went to borrowers with debt of six times income or more. Only 1.01% of home loans are non-performing and 0.54% are 30 to 89 days behind — both slightly lower than a year ago. New lending in the quarter was $200.5 billion, up 6.8% on June 2025.',
+   w:'If you have less than a 20% deposit, you’re in a large, normal group — nearly a third of new loans. And despite three rate rises this year, the vast majority of borrowers are keeping up, which is why lenders haven’t tightened the tap.'},
+  {d:'2026-07-01', tag:'QLD', cls:'chip', h:'Queensland’s $30,000 first home grant continues past 30 June',
+   p:'The $30,000 First Home Owner Grant on new homes valued under $750,000 was widely reported as ending on 30 June 2026. The 2026–27 State Budget confirmed it continues for eligible contracts signed from 1 July 2026, with no new end date announced.',
+   w:'If you held off on a Queensland house-and-land package because you thought the grant had halved, it hasn’t. Combined with no duty on a new first home at any price, it remains the most generous first home package on the east coast.'},
+  {d:'2026-05-05', tag:'VIC', cls:'chip', h:'Duty relief of up to $55,000 for January bushfire victims',
+   p:'The 2026–27 Victorian Budget provides relief for people affected by the January 2026 bushfires: land transfer duty refunds of up to $55,000 for recent purchasers whose homes were destroyed, up to $55,000 in duty relief on a replacement home, land tax waived for 2026 on destroyed or substantially damaged properties, and vacant residential land tax waived for 2027 where the property can’t be used. Relief must be applied for.',
+   w:'If you lost a home in the fires and are buying again, this can remove most or all of the duty on the replacement. Tell us before you sign — the relief is claimed at settlement, not after.'},
+  {d:'2026-08-11', tag:'Market', cls:'chip warn', h:'RBA: house prices falling in some capitals, new lending down noticeably',
+   p:'In its August statement the Board said momentum in the housing market has shifted, with prices falling in some capital cities and new housing loans declining noticeably — while business borrowing and investment stay strong. It expects inflation to stay high for some time on oil supply disruption and capacity pressures, and named upside risks.',
+   w:'Two things if you’re buying now: you have more room to negotiate than a year ago, and bank valuations are coming in tighter — so get the valuation done early, and test the price you’re considering against a higher rate, not the one advertised today.'},
+  {d:'2026-07-01', tag:'TAS', cls:'chip mute', h:'Tasmania’s first home owner grant drops to $20,000',
+   p:'For transactions commencing 1 July 2026 to 30 June 2027 the grant on a new home is $20,000, down from $30,000 in 2025–26. It still applies to new builds and newly built homes only.',
+   w:'With the established-home duty exemption gone the same day, a Tasmanian first home buyer’s total government help fell by about $10,000 plus the duty on 1 July. If you budgeted on last year’s figures, get a fresh number before you make an offer.'},
+  {d:'2027-09-30', until:true, tag:'NT', cls:'chip', h:'NT extends the $50,000 HomeGrown Territory Grant',
+   p:'First home buyers building or buying a new home in the Territory get $50,000 with no price cap, and existing owners get $30,000 under FreshStart. Both now cover contracts signed up to 30 September 2027, with applications open until September 2028.',
+   w:'$50,000 is five times the NSW or Victorian grant. If work could take you to Darwin or Alice Springs, it can cover the entire deposit gap on a new home.'},
+  {d:null, tag:'Federal', cls:'chip', h:'Help to Buy shared equity: 10,000 places a year',
+   p:'The Australian Government takes up to 40% of a new home or 30% of an existing one; the buyer needs a 2% deposit, no LMI, and a taxable income of up to $103,000 single or $165,000 joint (wage-indexed). Price caps sit slightly under the 5% Deposit Scheme — $1.3m in Sydney, $600,000 across the NT.',
+   w:'If you can afford repayments but can’t get a deposit together, this and the 5% Deposit Scheme are the two options to look at first. Help to Buy suits lower incomes; the 5% scheme suits anyone under the cap with 5% in hand. We can tell you which fits.'},
+  {d:'2026-07-01', tag:'NSW', cls:'chip mute', h:'NSW duty brackets indexed for 2026–27',
+   p:'The general transfer duty thresholds moved with CPI on 1 July: the top bracket now starts at $1,290,000 and the premium property threshold is $3,870,000. The first home buyer thresholds — $800,000 exempt, $1,000,000 cut-out — are fixed in legislation and did not move.',
+   w:'If you were quoted duty before July on a property over $1.2 million, the real figure is now slightly lower. This app already uses the 2026–27 table, so what you see here is current.'}
+];
+document.getElementById('newsList').innerHTML = NEWS.map(function(n){
+  var d = n.d ? new Date(n.d+'T00:00:00') : null;
+  var future = d && d>TODAY;
+  var dateText = d ? ((future ? (n.until?'until ':'from ') : '') + d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})) : 'Ongoing';
+  return '<article class="newsitem">'+
+    '<div class="newsmeta"><span class="'+n.cls+'">'+n.tag+'</span>'+
+    '<span class="newsdate">'+dateText+'</span></div>'+
+    '<h3>'+n.h+'</h3><p>'+n.p+'</p>'+
+    '<div class="why"><b>Why it matters to you: </b>'+n.w+'</div></article>';
+}).join('');
+
+/* ===================== talk to GrowthSure (one block, reused at the foot of each tool) ===================== */
+(function(){
+  var html =
+    '<div class="talkcard">'+
+      '<svg class="talklogo" viewBox="0 0 210 35" role="img" aria-label="GrowthSure"><use href="#gs-word"></use></svg>'+
+      '<div class="talkhead">'+
+        '<div><b>Want these numbers checked against your situation?</b><small>A quick chat with GrowthSure Finance is free, and there’s no obligation.</small></div>'+
+      '</div>'+
+      '<div class="talkrow">'+
+        '<a class="act" href="tel:0286776200">Call 02 8677 6200</a>'+
+        '<a class="act ghost" href="https://www.growthsure.com.au" target="_blank" rel="noopener">Book a consultation</a>'+
+      '</div>'+
+      '<div class="talkaddr">Shop 1, 58–62 Fitzwilliam Road, Old Toongabbie NSW 2146 · growthsure.com.au</div>'+
+    '</div>';
+  [].slice.call(document.querySelectorAll('.talk')).forEach(function(el){ el.innerHTML = html; });
+})();
+
+/* ===================== boot ===================== */
+function recalcAll(){ recalcRepay(); recalcDuty(); recalcBorrow(); }
+recalcAll();
+drawRba();
+
+try{
+  var savedTab=localStorage.getItem('gs-tab');
+  if(savedTab && document.getElementById(savedTab)){
+    tabs.forEach(function(x){ x.setAttribute('aria-selected', x.dataset.p===savedTab?'true':'false'); });
+    [].slice.call(document.querySelectorAll('.panel')).forEach(function(p){ p.classList.toggle('on', p.id===savedTab); });
+  }
+}catch(e){}
+
+var rt;
+window.addEventListener('resize', function(){
+  clearTimeout(rt);
+  rt=setTimeout(function(){ drawRba(); drawLoanChart(); }, 160);
+});
+})();
+</script>
+
+</body>
+</html>
