@@ -1,5 +1,5 @@
 /* Bump CACHE_NAME on every deploy — this is what makes the "new version ready" toast fire. */
-var CACHE_NAME = 'gs-finance-2026-09-29-icon';
+var CACHE_NAME = 'gs-finance-2026-10-03-ask';
 var SHELL_URL = './index.html';
 
 self.addEventListener('install', function (event) {

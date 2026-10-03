@@ -172,7 +172,7 @@ main{padding:0 16px 96px;max-width:620px;margin:0 auto}
   position:fixed;left:0;right:0;bottom:0;z-index:50;
   background:var(--surface);border-top:1px solid var(--rule);
   padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));
-  display:grid;grid-template-columns:repeat(6,1fr);
+  display:grid;grid-template-columns:repeat(7,1fr);
 }
 .tabbtn{
   background:none;border:0;cursor:pointer;padding:6px 2px 4px;
@@ -383,6 +383,41 @@ table.caps td.same{color:var(--ink-3);font-family:"Public Sans",sans-serif;font-
 .sheet ol{margin:0;padding-left:20px;font-size:14px;color:var(--ink-2);line-height:1.55}
 .sheet ol b{color:var(--ink)}
 .sheet .act{margin-top:18px}
+/* ---------- ask GrowthSure (AI assistant) ---------- */
+.askintro{font-size:12px;color:var(--ink-2);background:var(--surface-2);border-radius:10px;padding:9px 11px;margin-top:10px;line-height:1.45}
+.askintro b{color:var(--ink)}
+.asklog{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+.asklog > *{scroll-margin-bottom:150px}
+.bub{max-width:88%;padding:10px 13px;border-radius:14px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.bub p{margin:0}.bub p + p,.bub p + ul,.bub ul + p,.bub p + ol,.bub ol + p{margin-top:7px}
+.bub ul,.bub ol{margin:0;padding-left:19px}
+.bub li + li{margin-top:3px}
+.bub b{font-weight:700}
+.bub.me{align-self:flex-end;background:var(--action);color:var(--onbrand);border-bottom-right-radius:5px}
+.bub.bot{align-self:flex-start;background:var(--surface);border:1px solid var(--rule);box-shadow:var(--shadow);border-bottom-left-radius:5px}
+.bub.bot b{color:var(--brand)}
+.bub.sys{align-self:center;max-width:100%;background:var(--up-wash);color:var(--up);font-size:12.5px;border-radius:10px;text-align:center}
+.bub.sys button{margin-left:6px;background:none;border:0;color:inherit;font:inherit;font-weight:700;text-decoration:underline;cursor:pointer;padding:0}
+.askstatus{align-self:flex-start;font-size:12px;color:var(--ink-3);display:flex;align-items:center;gap:7px}
+.askstatus::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--brand);animation:askpulse 1s ease-in-out infinite}
+@keyframes askpulse{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.askstatus::before{animation:none}}
+.askchips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+.askchips button{background:var(--surface);border:1px solid var(--rule-2);border-radius:999px;padding:7px 12px;font:inherit;font-size:12.5px;font-weight:600;color:var(--brand);cursor:pointer;text-align:left}
+.cbcard{align-self:stretch;background:var(--surface);border:1.5px solid var(--brand);border-radius:14px;padding:13px 14px;box-shadow:var(--shadow)}
+.cbcard h3{font-size:15px;font-weight:700}
+.cbcard > p{margin:3px 0 8px;font-size:12.5px;color:var(--ink-2)}
+.cbcard label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;color:var(--ink-3);margin-top:8px}
+.cbcard input,.cbcard textarea{width:100%;box-sizing:border-box;margin-top:3px;background:var(--surface);color:var(--ink);border:1px solid var(--rule-2);border-radius:9px;padding:8px 10px;font:inherit;font-size:16px;text-align:left}
+.cbcard textarea{min-height:76px;resize:vertical;font-size:14px}
+.cbcard .talkrow .act{margin-top:12px}
+.cbcard.closed{border-color:var(--rule);opacity:.8}
+.composer{position:sticky;bottom:calc(66px + env(safe-area-inset-bottom,0px));margin-top:16px;display:flex;gap:8px;align-items:flex-end;background:var(--paper);padding:8px 0}
+.composer textarea{flex:1;min-width:0;resize:none;max-height:140px;background:var(--surface);color:var(--ink);border:1px solid var(--rule-2);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;line-height:1.35}
+.composer button{flex:none;width:44px;height:44px;border-radius:12px;border:0;background:var(--action);color:var(--onbrand);cursor:pointer;display:grid;place-items:center}
+.composer button:disabled{opacity:.45;cursor:default}
+.composer button svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.asknew{background:none;border:0;color:var(--brand);font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;padding:0;margin-top:8px}
 footer{padding:26px 0 10px;color:var(--ink-3);font-size:11.5px;line-height:1.55}
 footer a{color:var(--brand)}
 </style>
@@ -755,6 +790,33 @@ footer a{color:var(--brand)}
   <div class="talk"></div>
 </section>
 
+<!-- ============ ASK GROWTHSURE ============ -->
+<section class="panel" id="p-ask" role="tabpanel" aria-label="Ask GrowthSure">
+  <div class="pagehead">
+    <h1>Ask GrowthSure</h1>
+    <p>Questions about buying, borrowing or refinancing — answered with the same calculators as the rest of this app.</p>
+  </div>
+  <div class="askintro"><b>An AI assistant giving general information, not credit advice.</b> It can make mistakes, and it doesn't know your full situation — a GrowthSure broker confirms anything before you act on it. Please don't share your tax file number, ID numbers or bank details. What you type is sent to our AI provider, Anthropic, to write the replies.</div>
+  <div class="askchips" id="askChips">
+    <button type="button">How much could we borrow on $160,000 a year?</button>
+    <button type="button">Stamp duty on a $750,000 first home in NSW?</button>
+    <button type="button">What if rates rise another 0.5%?</button>
+    <button type="button">What help is there for first home buyers in Queensland?</button>
+  </div>
+  <div class="asklog" id="askLog" aria-live="polite"></div>
+  <button type="button" class="asknew" id="askNew" hidden>Start a new conversation</button>
+  <form class="composer" id="askForm">
+    <textarea id="askInput" rows="1" maxlength="2000" placeholder="Ask about your home loan…" aria-label="Your question"></textarea>
+    <button type="submit" id="askSend" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </form>
+</section>
+
+<!-- Netlify Forms: callback requests from the assistant land in Netlify → Forms → callback -->
+<form name="callback" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="bot-field"><input name="first_name"><input name="phone"><input name="email">
+  <input name="best_time"><textarea name="summary"></textarea>
+</form>
+
 <footer>
   <b style="color:var(--ink-2)">GrowthSure Finance</b> — estimates to help you plan, not a loan offer or approval. Duty rates, thresholds and concessions are current as at 29 September 2026 and were taken from Revenue NSW, the Victorian SRO, Queensland Revenue Office, RevenueWA, RevenueSA, SRO Tasmania, the ACT Revenue Office, the NT Territory Revenue Office, the Reserve Bank of Australia and Housing Australia. They change — most commonly at state budgets and on 1 July. This is general information, not credit or tax advice, and does not account for a lender's own policy.
 </footer>
@@ -789,6 +851,10 @@ footer a{color:var(--brand)}
   <button class="tabbtn" role="tab" aria-selected="false" data-p="p-tools">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8"/></svg>
     Tools
+  </button>
+  <button class="tabbtn" role="tab" aria-selected="false" data-p="p-ask">
+    <svg viewBox="0 0 24 24"><path d="M20 12.5a7.5 7.5 0 0 1-11 6.6L4 20.5l1.4-4.6A7.5 7.5 0 1 1 20 12.5Z"/><path d="M8.5 11h7M8.5 14h4.5"/></svg>
+    Ask
   </button>
 </nav>
 
@@ -1409,31 +1475,38 @@ function taxAU(gross){
   var medicare = gross>26000 ? gross*0.02 : 0;
   return t + medicare;
 }
-function recalcBorrow(){
-  var gross=num('b_inc'), deps=num('b_dep'), adults=Math.max(1,num('b_adults'));
-  var exp=num('b_exp'), debt=num('b_debt'), cards=num('b_cards'), rate=num('b_rate');
-  if(gross<=0) return;
+/* pure so the Ask assistant runs exactly the same numbers as this tab */
+function borrowCalc(o){
+  var gross=o.gross, deps=o.deps, adults=Math.max(1,o.adults);
   /* split income across applicants for a fairer tax estimate */
   var per=gross/adults;
   var netAnnual = (per - taxAU(per))*adults;
   var netMonthly = netAnnual/12;
   var hemFloor = 1650 + (adults>1?1000:0) + deps*430;
-  var living = Math.max(hemFloor, exp||0);
-  var cardCost = cards*0.038;
-  var outgoings = living + debt + cardCost;
+  var living = Math.max(hemFloor, o.exp||0);
+  var cardCost = o.cards*0.038;
+  var outgoings = living + o.debt + cardCost;
   var surplus = Math.max(0, netMonthly - outgoings);
-  var assess = rate + 3;
+  var assess = o.rate + 3;
   var r = assess/100/12, n=360;
   var capacity = r>0 ? surplus*(1-Math.pow(1+r,-n))/r : surplus*n;
+  return {capacity:Math.floor(capacity/1000)*1000, netMonthly:netMonthly, living:living, hemFloor:hemFloor,
+    cardCost:cardCost, outgoings:outgoings, surplus:surplus, assess:assess};
+}
+function recalcBorrow(){
+  var gross=num('b_inc');
+  if(gross<=0) return;
+  var cards=num('b_cards');
+  var b=borrowCalc({gross:gross, deps:num('b_dep'), adults:num('b_adults'), exp:num('b_exp'), debt:num('b_debt'), cards:cards, rate:num('b_rate')});
 
-  document.getElementById('b_out').textContent = money(Math.floor(capacity/1000)*1000);
-  document.getElementById('b_net').textContent = money(netMonthly);
-  document.getElementById('b_out2').textContent = money(outgoings);
-  document.getElementById('b_surplus').textContent = money(surplus);
-  document.getElementById('b_assess').textContent = assess.toFixed(2)+'%';
+  document.getElementById('b_out').textContent = money(b.capacity);
+  document.getElementById('b_net').textContent = money(b.netMonthly);
+  document.getElementById('b_out2').textContent = money(b.outgoings);
+  document.getElementById('b_surplus').textContent = money(b.surplus);
+  document.getElementById('b_assess').textContent = b.assess.toFixed(2)+'%';
   document.getElementById('b_sub').textContent =
-    'Over 30 years at ' + assess.toFixed(2) + '%, with ' + money(living) + ' a month of household expenses assumed'
-    + (cards>0 ? ' and ' + money(cardCost) + ' a month attributed to credit card limits.' : '.');
+    'Over 30 years at ' + b.assess.toFixed(2) + '%, with ' + money(b.living) + ' a month of household expenses assumed'
+    + (cards>0 ? ' and ' + money(b.cardCost) + ' a month attributed to credit card limits.' : '.');
 }
 
 /* ===================== static content ===================== */
@@ -1752,6 +1825,258 @@ document.getElementById('newsList').innerHTML = NEWS.map(function(n){
       });
     }catch(e){}
   }
+})();
+
+/* ===================== Ask GrowthSure (AI assistant) ===================== */
+/* The conversation lives here; netlify/edge-functions/ask.js adds the system prompt and
+   tools and streams Claude's reply back. When Claude calls a tool, it runs here against
+   the same calculators and figures as the other tabs, and the result goes back up. */
+(function(){
+  var log=document.getElementById('askLog'), form=document.getElementById('askForm');
+  var input=document.getElementById('askInput'), sendBtn=document.getElementById('askSend');
+  var chips=document.getElementById('askChips'), newBtn=document.getElementById('askNew');
+  var ENDPOINT='/api/ask';
+  var messages=[], busy=false;
+
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  /* just enough markdown for a chat bubble: paragraphs, - and 1. lists, **bold** */
+  function md(text){
+    var out='', list=null;
+    function inline(t){ return esc(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>'); }
+    function close(){ if(list){ out+='</'+list+'>'; list=null; } }
+    text.split(/\n/).forEach(function(line){
+      var m;
+      if((m=line.match(/^\s*[-*•]\s+(.*)/))){ if(list!=='ul'){ close(); out+='<ul>'; list='ul'; } out+='<li>'+inline(m[1])+'</li>'; }
+      else if((m=line.match(/^\s*\d+[.)]\s+(.*)/))){ if(list!=='ol'){ close(); out+='<ol>'; list='ol'; } out+='<li>'+inline(m[1])+'</li>'; }
+      else if(line.trim()===''){ close(); }
+      else { close(); out+='<p>'+inline(line.replace(/^#+\s*/,''))+'</p>'; }
+    });
+    close();
+    return out;
+  }
+  function add(cls, html){
+    var el=document.createElement('div'); el.className=cls; el.innerHTML=html||'';
+    log.appendChild(el); el.scrollIntoView({block:'end',behavior:'smooth'});
+    return el;
+  }
+  function setBusy(b){ busy=b; sendBtn.disabled=b; input.disabled=b; }
+
+  /* ---------- tools: each returns a plain object that is sent back to Claude ---------- */
+  function n(v, lo, hi){ v=Number(v); if(!isFinite(v)) v=0; return Math.min(hi, Math.max(lo, v)); }
+  var round=function(v){ return Math.round(v); }, cents=function(v){ return Math.round(v*100)/100; };
+  var BUYER={first_home_buyer:'fhb', owner_occupier:'oo', investor:'inv'};
+  var PROP={established:'est', 'new':'new', vacant_land:'land'};
+  var FREQ={monthly:12, fortnightly:26, weekly:52};
+  function capRow(rows, st){
+    for(var i=0;i<rows.length;i++) if(rows[i][0]===st)
+      return rows[i][3]===null ? {whole_territory:rows[i][2]} : {capital_and_regional_centres:rows[i][2], elsewhere:rows[i][3]};
+    return null;
+  }
+  function strip(h){ return String(h).replace(/<[^>]+>/g,'').replace(/&amp;/g,'&'); }
+
+  var TOOLS={
+    repayment_estimate:function(a){
+      var P=n(a.loan_amount,1,1e8), rate=n(a.interest_rate_pct,0,30), yrs=n(a.term_years,1,40);
+      var perYear=FREQ[a.frequency]||12, ioY=n(a.interest_only_years,0,Math.min(15,yrs-1));
+      var extra=n(a.extra_repayment,0,1e7), offset=n(a.offset_balance,0,P);
+      var res=amortise(P, rate, yrs, perYear, extra, offset, ioY);
+      var base=amortise(P, rate, yrs, perYear, 0, 0, ioY);
+      var io=ioY>0;
+      var pay = io ? Math.max(0,P-offset)*(rate/100/perYear) : res.piPayment+extra;
+      var rises=[0.25,0.5,1].map(function(d){
+        var np = io ? Math.max(0,P-offset)*((rate+d)/100/perYear) : payment(P,(rate+d)/100/perYear,Math.round((yrs-ioY)*perYear))+extra;
+        return {rate_pct:cents(rate+d), repayment:cents(np), increase_per_period:cents(np-pay)};
+      });
+      var r={frequency:a.frequency, repayment:cents(pay), total_interest:round(res.totalInterest), total_repaid:round(res.totalInterest+P),
+        years_to_repay:Math.round(res.periods/perYear*10)/10, if_rates_rise:rises,
+        lender_assessment:{rate_pct:cents(rate+3), monthly_repayment:round(payment(P,(rate+3)/100/12,Math.round(yrs*12))),
+          note:'Lenders test new loans at the rate plus a 3% serviceability buffer.'}};
+      if(io) r.repayment_after_interest_only=cents(res.piPayment+extra);
+      if(extra>0||offset>0){ r.interest_saved_by_extras=round(base.totalInterest-res.totalInterest); r.years_saved=Math.round((base.periods-res.periods)/perYear*10)/10; }
+      return r;
+    },
+    stamp_duty_estimate:function(a){
+      var st=a.state, v=n(a.purchase_price,0,1e9);
+      if(!DUTY_SRC[st]) return {error:'Unknown state'};
+      var d=calcDuty(st, v, BUYER[a.buyer]||'oo', PROP[a.property]||'est', !!a.foreign_buyer);
+      return {state:st, purchase_price:round(v), duty_payable:round(d.duty+d.surcharge), duty_before_concessions:round(d.full),
+        concession_saving:round(d.concession), foreign_buyer_surcharge:round(d.surcharge), treatment:d.label, notes:strip(d.note),
+        source:DUTY_SRC[st], excludes:'Mortgage and transfer registration fees, which are a few hundred dollars.'};
+    },
+    borrowing_power_estimate:function(a){
+      var b=borrowCalc({gross:n(a.gross_household_income,0,1e8), adults:n(a.applicants,1,6), deps:n(a.dependants,0,12),
+        exp:n(a.monthly_living_expenses,0,1e6), debt:n(a.monthly_other_repayments,0,1e6), cards:n(a.credit_card_limits,0,1e7), rate:n(a.product_rate_pct,1,30)});
+      return {indicative_maximum_loan:b.capacity, net_monthly_income:round(b.netMonthly), living_expenses_assumed_monthly:round(b.living),
+        benchmark_expense_floor_monthly:round(b.hemFloor), credit_card_commitment_monthly:round(b.cardCost), total_monthly_outgoings:round(b.outgoings),
+        monthly_surplus:round(b.surplus), assessment_rate_pct:cents(b.assess),
+        assumptions:'Simplified resident tax and Medicare estimate, income split evenly across applicants, 3.8% of card limits a month, 3% buffer over 30 years. Lenders vary 10–15% either side; not a pre-approval.'};
+    },
+    government_help:function(a){
+      var b=BENEFITS[a.state]; if(!b) return {error:'Unknown state'};
+      return {state:b.name, first_home_owner_grant:{name:b.grant.name, amount:b.grant.amt, rules:b.grant.rule},
+        stamp_duty_for_first_home_buyers:{summary:b.duty.head, rules:b.duty.rule},
+        five_percent_deposit_scheme:{price_caps:capRow(CAPS,a.state), rules:'Federal: 5% deposit (2% for single parents), no LMI, no income caps or place limits since 1 October 2025.'},
+        help_to_buy:{price_caps:capRow(HTB_CAPS,a.state), rules:'Federal shared equity: government takes up to 40% of a new or 30% of an existing home, 2% deposit, taxable income up to $103,000 single or $165,000 joint, 10,000 places a year.'},
+        other:b.items.map(function(i){ return strip(i[1])+': '+strip(i[2]); })};
+    },
+    market_update:function(){
+      var last=RATE_MOVES[RATE_MOVES.length-1];
+      var upcoming=MEETINGS_2026.concat(MEETINGS_2027).filter(function(d){ return new Date(d+'T00:00:00')>TODAY; }).slice(0,3);
+      var news=NEWS.slice().sort(function(x,y){ return (y.d||'').localeCompare(x.d||''); }).map(function(i){
+        return {date:i.d, ongoing_until:i.until?i.d:undefined, tag:i.tag, headline:i.h, detail:i.p, what_it_means:i.w};
+      });
+      return {rba_cash_rate_pct:last[2], last_move:{date:last[0], change_pct:last[1]},
+        recent_moves:RATE_MOVES.slice(-6).map(function(m){ return {date:m[0], change_pct:m[1], new_rate_pct:m[2]}; }),
+        next_rba_decisions:upcoming, news:news};
+    }
+  };
+
+  /* request_callback waits for the person to check the details and tap Send */
+  function callbackCard(a){
+    return new Promise(function(resolve){
+      var card=add('cbcard',
+        '<h3>Send this to a GrowthSure broker?</h3><p>Check the details — nothing is sent until you tap Send.</p>'+
+        '<label>First name<input name="first_name" autocomplete="given-name"></label>'+
+        '<label>Phone<input name="phone" type="tel" autocomplete="tel"></label>'+
+        '<label>Email<input name="email" type="email" autocomplete="email"></label>'+
+        '<label>Best time to call<input name="best_time"></label>'+
+        '<label>What it’s about<textarea name="summary"></textarea></label>'+
+        '<div class="talkrow"><button type="button" class="act" data-a="send">Send</button><button type="button" class="act ghost" data-a="cancel">Cancel</button></div>');
+      ['first_name','phone','email','best_time','summary'].forEach(function(k){ card.querySelector('[name='+k+']').value=a[k]||''; });
+      function done(result, label){
+        [].slice.call(card.querySelectorAll('input,textarea,button')).forEach(function(el){ el.disabled=true; });
+        card.classList.add('closed');
+        card.querySelector('p').textContent=label;
+        resolve(result);
+      }
+      card.addEventListener('click',function(e){
+        var act=e.target.getAttribute && e.target.getAttribute('data-a'); if(!act) return;
+        if(act==='cancel') return done({status:'cancelled_by_user'}, 'Not sent.');
+        var f={'form-name':'callback'}, ok=false;
+        ['first_name','phone','email','best_time','summary'].forEach(function(k){ f[k]=card.querySelector('[name='+k+']').value.trim(); });
+        ok = f.first_name && (f.phone || f.email);
+        if(!ok){ card.querySelector('p').textContent='Please add your first name and a phone number or email.'; return; }
+        e.target.disabled=true;
+        fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:new URLSearchParams(f).toString()})
+          .then(function(r){ if(!r.ok) throw new Error(r.status); done({status:'sent', first_name:f.first_name}, 'Sent — a broker will be in touch.'); })
+          .catch(function(){ done({status:'failed', note:'Could not be sent from the app. Ask them to call 02 8677 6200 instead.'}, 'That didn’t send — please call 02 8677 6200.'); });
+      });
+    });
+  }
+
+  var LABEL={repayment_estimate:'Running the repayment calculator', stamp_duty_estimate:'Working out stamp duty',
+    borrowing_power_estimate:'Estimating borrowing power', government_help:'Checking government help',
+    market_update:'Checking the latest rates and news', request_callback:'Preparing your callback request'};
+
+  function runTools(blocks){
+    var results=[];
+    return blocks.reduce(function(p, b){
+      return p.then(function(){
+        var status=add('askstatus', esc(LABEL[b.name]||'Working')+'…');
+        var out;
+        try{
+          out = b.name==='request_callback' ? callbackCard(b.input||{}) : Promise.resolve(TOOLS[b.name] ? TOOLS[b.name](b.input||{}) : {error:'Unknown tool'});
+        }catch(err){ out=Promise.resolve({error:'The calculator could not run with those inputs.'}); }
+        return out.then(function(r){
+          status.remove();
+          results.push({type:'tool_result', tool_use_id:b.id, content:JSON.stringify(r), is_error:!!r.error});
+        });
+      });
+    }, Promise.resolve()).then(function(){ return results; });
+  }
+
+  /* drop everything from the last question onwards, so a failed turn leaves a valid history */
+  function rollback(){
+    for(var i=messages.length-1;i>=0;i--){
+      var m=messages[i];
+      if(m.role==='user' && typeof m.content==='string'){ messages.length=i; return m.content; }
+    }
+    messages.length=0; return '';
+  }
+
+  function fail(code){
+    var q=rollback(), text;
+    if(code==='conversation_too_long') text='This conversation has got long — start a new one to keep going.';
+    else if(code==='not_configured') text='The assistant isn’t switched on yet. Call us on 02 8677 6200.';
+    else if(code==='busy') text='Lots of questions right now — try again in a moment.';
+    else text='Something went wrong on our side.';
+    var el=add('bub sys', esc(text)+(q && code!=='conversation_too_long' && code!=='not_configured' ? '<button type="button">Try again</button>' : ''));
+    var btn=el.querySelector('button');
+    if(btn) btn.addEventListener('click',function(){ el.remove(); ask(q, true); });
+    if(code==='conversation_too_long') newBtn.hidden=false;
+    setBusy(false);
+  }
+
+  function turn(){
+    var bubble=null, text='', buf='', finished=false;
+    var thinking=add('askstatus','Thinking…');
+    function handle(ev){
+      if(ev.t==='text'){
+        if(thinking){ thinking.remove(); thinking=null; }
+        if(!bubble) bubble=add('bub bot');
+        text+=ev.d; bubble.innerHTML=md(text);
+      } else if(ev.t==='done'){
+        finished=true;
+        if(thinking){ thinking.remove(); thinking=null; }
+        messages.push({role:'assistant', content:ev.content});
+        var uses=ev.content.filter(function(b){ return b.type==='tool_use'; });
+        if(ev.stop_reason==='tool_use' && uses.length){
+          runTools(uses).then(function(results){ messages.push({role:'user', content:results}); turn(); });
+        } else {
+          if(ev.stop_reason==='max_tokens' && bubble) bubble.innerHTML=md(text+'\n\n…');
+          setBusy(false); newBtn.hidden=false; input.focus();
+        }
+      } else if(ev.t==='refusal' || ev.t==='error'){
+        finished=true;
+        if(thinking){ thinking.remove(); thinking=null; }
+        if(bubble) bubble.remove();
+        if(ev.t==='refusal'){
+          rollback();
+          add('bub bot', md('I can’t help with that one here. For anything about your home loan, a GrowthSure broker can talk it through — call **02 8677 6200**.'));
+          setBusy(false);
+        } else fail(ev.code);
+      }
+    }
+    fetch(ENDPOINT, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({messages:messages})})
+      .then(function(res){
+        if(!res.ok || !res.body){
+          return res.json().catch(function(){ return {}; }).then(function(j){ throw {code:j.error||(res.status===429?'busy':'server_error')}; });
+        }
+        var reader=res.body.getReader(), dec=new TextDecoder();
+        function pump(){
+          return reader.read().then(function(r){
+            if(r.done){ if(buf.trim()) handle(JSON.parse(buf)); return; }
+            buf+=dec.decode(r.value,{stream:true});
+            var lines=buf.split('\n'); buf=lines.pop();
+            lines.forEach(function(l){ if(l.trim()) handle(JSON.parse(l)); });
+            return pump();
+          });
+        }
+        return pump();
+      })
+      .then(function(){ if(!finished) throw {code:'server_error'}; })
+      .catch(function(err){
+        if(finished) return;
+        if(thinking){ thinking.remove(); thinking=null; }
+        if(bubble) bubble.remove();
+        fail(err && err.code || 'server_error');
+      });
+  }
+
+  function ask(q, retry){
+    q=(q||'').trim(); if(!q || busy) return;
+    chips.hidden=true;
+    if(!retry) add('bub me', md(q)); 
+    messages.push({role:'user', content:q});
+    setBusy(true);
+    turn();
+  }
+
+  form.addEventListener('submit',function(e){ e.preventDefault(); var q=input.value; input.value=''; input.style.height=''; ask(q); });
+  input.addEventListener('keydown',function(e){ if(e.key==='Enter' && !e.shiftKey && !e.isComposing){ e.preventDefault(); form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit')); } });
+  input.addEventListener('input',function(){ input.style.height=''; input.style.height=Math.min(140,input.scrollHeight)+'px'; });
+  chips.addEventListener('click',function(e){ if(e.target.tagName==='BUTTON') ask(e.target.textContent); });
+  newBtn.addEventListener('click',function(){ if(busy) return; messages=[]; log.innerHTML=''; chips.hidden=false; newBtn.hidden=true; input.focus(); });
 })();
 
 /* ===================== boot ===================== */
